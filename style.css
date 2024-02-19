@@ -44,7 +44,7 @@ body {
 .headPhoto {
     width: 8rem;
     height: 8rem;
-    background: url(https://pic.imgdb.cn/item/65d313369f345e8d03766275.jpg)no-repeat;
+    background: url(https://pic.imgdb.cn/item/65d313369f345e8d03766275.jpg);
     background-size: cover;
     border-radius: 50%;
     position: relative;
