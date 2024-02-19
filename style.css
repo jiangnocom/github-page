@@ -41,11 +41,10 @@ body {
     height: 26rem;
     margin: 95px 0 0 9.5%;
 }
-
 .headPhoto {
     width: 8rem;
     height: 8rem;
-    background: url(https://cloud.jiangno.com:11011/img/webp/head.webp)no-repeat;
+    background: url(https://pic.imgdb.cn/item/65d313369f345e8d03766275.jpg)no-repeat;
     background-size: cover;
     border-radius: 50%;
     position: relative;
