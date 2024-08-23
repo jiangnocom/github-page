@@ -4,25 +4,18 @@
   
   
   <entry>
-    <title>about</title>
-    <link href="/2024/08/23/about/"/>
-    <url>/2024/08/23/about/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>好久不见。</title>
     <link href="/2024/08/23/hello-world/"/>
     <url>/2024/08/23/hello-world/</url>
     
     <content type="html"><![CDATA[<p>好久不见！<br>进入新阶段—</p>]]></content>
     
+    
+    <categories>
+      
+      <category>默认</category>
+      
+    </categories>
     
     
     <tags>
