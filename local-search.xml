@@ -8,19 +8,19 @@
     <link href="/2024/08/23/hello-world/"/>
     <url>/2024/08/23/hello-world/</url>
     
-    <content type="html"><![CDATA[<p>好久不见！<br>进入新阶段—</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="好久不见！"><a href="#好久不见！" class="headerlink" title="好久不见！"></a>好久不见！</h2><p>回顾一下我的博客历史：</p><h3 id="一阶段"><a href="#一阶段" class="headerlink" title="一阶段"></a>一阶段</h3><p>自第一次创建“博客”来，已过去了4年，至今还记得亲手写下第一个html标签时的心潮澎湃。  </p><p>但我不满足于区区html，便又在网上寻觅，便遇见了wordpress，第一次搭建了php环境，被其强大的交互能力折服，那时还不知道什么前端后端，只知道，wordpress好强大。  </p><p>没有公网主机的我用一台笔记本内网穿透，域名解析，强制让它7x24小时运行（哈哈</p><p>最终还是抵不过运维的压力（滑稽，其实是懒得搞了</p><h3 id="二阶段"><a href="#二阶段" class="headerlink" title="二阶段"></a>二阶段</h3><p>小屁孩终究还是敌不过想要一个自己的网站的欲望，却又想白嫖。我便去找能够使用的免费的服务器（小水管）<br>部署了typecho（简洁好用）。但是，白嫖的总是不稳定，没多久便又挂了。</p><h3 id="现阶段"><a href="#现阶段" class="headerlink" title="现阶段"></a>现阶段</h3><p>现在，我部署了hexo生成静态页面上传至GitHub，作为我第三阶段（或许是最终阶段）博客的开始，同时也是人生的一个新阶段，我想我会尽力记录我的学习经验，毕竟，再怎么漂亮的博客页面，比不上丰硕的博客内容。</p>]]></content>
     
     
     <categories>
       
-      <category>默认</category>
+      <category>其他</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>其他</tag>
+      <tag>杂谈</tag>
       
     </tags>
     
