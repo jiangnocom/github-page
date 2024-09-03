@@ -19,26 +19,26 @@
   <meta name="author" content="江の">
   <meta name="keywords" content="">
   
-    <meta name="description" content="好久不见！回顾一下我的博客历史： 一阶段自第一次创建“博客”来，已过去了4年，至今还记得亲手写下第一个html标签时的心潮澎湃。   但我不满足于区区html，便又在网上寻觅，便遇见了wordpress，第一次搭建了php环境，被其强大的交互能力折服，那时还不知道什么前端后端，只知道，wordpress好强大。   没有公网主机的我用一台笔记本内网穿透，域名解析，强制让它7x24小时运行（哈哈">
+    <meta name="description" content="指针初步学习1.指针是什么？电脑内存这么大我们怎么管理？于是我们创造了指针。  指针是内存最小单位的一个地址  假设以下一格为一个字节（Byte）类比为房间，如何才能找到每个房间，于是就进行编号。    编号 内存单元    1    2    3    … …   这个编号为内存地址，即为指针。 假设我们要对int a取地址，int大小为4个字节，C语言就会取出第一个字节的地址。 如：    编">
 <meta property="og:type" content="article">
-<meta property="og:title" content="好久不见。">
-<meta property="og:url" content="http://jiangno.com/2024/08/23/hello-world/index.html">
+<meta property="og:title" content="指针初步学习">
+<meta property="og:url" content="http://jiangno.com/2024/08/25/note/index.html">
 <meta property="og:site_name" content="江の博客">
-<meta property="og:description" content="好久不见！回顾一下我的博客历史： 一阶段自第一次创建“博客”来，已过去了4年，至今还记得亲手写下第一个html标签时的心潮澎湃。   但我不满足于区区html，便又在网上寻觅，便遇见了wordpress，第一次搭建了php环境，被其强大的交互能力折服，那时还不知道什么前端后端，只知道，wordpress好强大。   没有公网主机的我用一台笔记本内网穿透，域名解析，强制让它7x24小时运行（哈哈">
+<meta property="og:description" content="指针初步学习1.指针是什么？电脑内存这么大我们怎么管理？于是我们创造了指针。  指针是内存最小单位的一个地址  假设以下一格为一个字节（Byte）类比为房间，如何才能找到每个房间，于是就进行编号。    编号 内存单元    1    2    3    … …   这个编号为内存地址，即为指针。 假设我们要对int a取地址，int大小为4个字节，C语言就会取出第一个字节的地址。 如：    编">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s3.bmp.ovh/imgs/2023/01/28/f910bfe1af04d2a8.jpg">
-<meta property="article:published_time" content="2024-08-23T04:06:41.518Z">
-<meta property="article:modified_time" content="2024-08-23T11:54:50.719Z">
+<meta property="og:image" content="https://s3.bmp.ovh/imgs/2023/07/14/9e5c228fbd105305.jpg">
+<meta property="article:published_time" content="2024-08-25T07:16:01.050Z">
+<meta property="article:modified_time" content="2024-08-25T07:21:08.747Z">
 <meta property="article:author" content="江の">
-<meta property="article:tag" content="杂谈">
+<meta property="article:tag" content="指针">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2023/01/28/f910bfe1af04d2a8.jpg">
+<meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2023/07/14/9e5c228fbd105305.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>好久不见。 - 江の博客</title>
+  <title>指针初步学习 - 江の博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="好久不见。"></span>
+            <span id="subtitle" data-typed-text="指针初步学习"></span>
           
         </div>
 
@@ -215,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-08-23 12:06" pubdate>
-          2024年8月23日 中午
+        <time datetime="2024-08-25 15:16" pubdate>
+          2024年8月25日 下午
         </time>
       </span>
     
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          326 字
+          497 字
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          3 分钟
+          5 分钟
         
       </span>
     
@@ -275,19 +275,85 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">好久不见。</h1>
+            <h1 id="seo-header">指针初步学习</h1>
             
             
               <div class="markdown-body">
                 
-                <p><img src="https://s3.bmp.ovh/imgs/2023/01/28/f910bfe1af04d2a8.jpg" srcset="/img/loading.gif" lazyload alt="星空"></p>
-<h2 id="好久不见！"><a href="#好久不见！" class="headerlink" title="好久不见！"></a>好久不见！</h2><p>回顾一下我的博客历史：</p>
-<h3 id="一阶段"><a href="#一阶段" class="headerlink" title="一阶段"></a>一阶段</h3><p>自第一次创建“博客”来，已过去了4年，至今还记得亲手写下第一个html标签时的心潮澎湃。  </p>
-<p>但我不满足于区区html，便又在网上寻觅，便遇见了wordpress，第一次搭建了php环境，被其强大的交互能力折服，那时还不知道什么前端后端，只知道，wordpress好强大。  </p>
-<p>没有公网主机的我用一台笔记本内网穿透，域名解析，强制让它7x24小时运行（哈哈</p>
-<p>最终还是抵不过运维的压力（滑稽，其实是懒得搞了</p>
-<h3 id="二阶段"><a href="#二阶段" class="headerlink" title="二阶段"></a>二阶段</h3><p>小屁孩终究还是敌不过想要一个自己的网站的欲望，却又想白嫖。我便去找能够使用的免费的服务器（小水管）<br>部署了typecho（简洁好用）。但是，白嫖的总是不稳定，没多久便又挂了。</p>
-<h3 id="现阶段"><a href="#现阶段" class="headerlink" title="现阶段"></a>现阶段</h3><p>现在，我部署了hexo生成静态页面上传至GitHub，作为我第三阶段（或许是最终阶段）博客的开始，同时也是人生的一个新阶段，我想我会尽力记录我的学习经验，毕竟，再怎么漂亮的博客页面，比不上丰硕的博客内容。</p>
+                <h1 id="指针初步学习"><a href="#指针初步学习" class="headerlink" title="指针初步学习"></a>指针初步学习</h1><h2 id="1-指针是什么？"><a href="#1-指针是什么？" class="headerlink" title="1.指针是什么？"></a>1.指针是什么？</h2><p>电脑内存这么大我们怎么管理？<br>于是我们创造了指针。</p>
+<ul>
+<li>指针是内存最小单位的一个地址</li>
+</ul>
+<p>假设以下一格为一个字节（Byte）<br>类比为房间，如何才能找到每个房间，于是就进行编号。</p>
+<table>
+<thead>
+<tr>
+<th align="right">编号</th>
+<th align="center">内存单元</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">1</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="right">…</td>
+<td align="center">…</td>
+</tr>
+</tbody></table>
+<p>这个编号为内存地址，即为指针。</p>
+<p>假设我们要对<code>int a</code>取地址，<code>int</code>大小为4个字节，C语言就会取出第一个字节的地址。</p>
+<p>如：</p>
+<table>
+<thead>
+<tr>
+<th align="right">编号(本质为二进制但是用16进制展示)</th>
+<th align="center">内存单元</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">0x00dbfd98</td>
+<td align="center">a</td>
+</tr>
+<tr>
+<td align="right">0x00dbfd99</td>
+<td align="center">a</td>
+</tr>
+<tr>
+<td align="right">0x00dbfd9a</td>
+<td align="center">a</td>
+</tr>
+<tr>
+<td align="right">0x00dbfd9b</td>
+<td align="center">a</td>
+</tr>
+</tbody></table>
+<p>此处<code>&amp;a = 0x00dbfd98</code>。</p>
+<p><strong>但是注意</strong>：我们在口头中所说指针一般为C语言的指针变量。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span>* pa = &amp;a;<br><span class="hljs-comment">//一般我们在这里就把pa这个指针变量说成指针</span><br><span class="hljs-comment">//本文中我会区分指针与指针变量。</span><br></code></pre></td></tr></table></figure>
+
+
+<p>在不同的机器上，指针长度不同，32位即32bit，能管理4GB的内存（二进制：11111111 11111111 11111111 11111111），所以在32位机器上一个指针变量大小为4字节。</p>
+<h2 id="2-指针和指针类型"><a href="#2-指针和指针类型" class="headerlink" title="2.指针和指针类型"></a>2.指针和指针类型</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">char</span>*   pc = <span class="hljs-literal">NULL</span>;<br><span class="hljs-type">short</span>*  ps = <span class="hljs-literal">NULL</span>;<br><span class="hljs-type">int</span>*    pi = <span class="hljs-literal">NULL</span>;<br><span class="hljs-type">double</span>* pd = <span class="hljs-literal">NULL</span>;<br></code></pre></td></tr></table></figure>
+<p>这些不同类型的指针变量在32位下都是4个字节,<br>那么为什么要区分这些不同类型的指针呢？</p>
+<h3 id="2-1指针类型的意义"><a href="#2-1指针类型的意义" class="headerlink" title="2.1指针类型的意义"></a>2.1指针类型的意义</h3><p><strong>举例1：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> a = <span class="hljs-number">0x11223344</span>;<br><span class="hljs-type">char</span>* pc = (<span class="hljs-type">char</span>*)&amp;a;<br>*pc = <span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
+<p>此时a被修改为了0x11223300。  </p>
+<p>所以指针类型决定了指针在被解引用时访问几个字节，如果是<code>char*</code>在解引用是访问1个字节，导致了例子中的情况。</p>
+<hr>
+<p><strong>举例2：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span>   a = <span class="hljs-number">0x11223344</span>;<br><br><span class="hljs-type">char</span>* pc = (<span class="hljs-type">char</span>*)&amp;a;<br><span class="hljs-type">int</span>*  pi = &amp;a;<br><br>pc+<span class="hljs-number">1</span>;<span class="hljs-comment">//这里加1会给地址加1个字节</span><br>pi+<span class="hljs-number">1</span>;<span class="hljs-comment">//这里加1会给地址加4个字节</span><br></code></pre></td></tr></table></figure>
+<p>即根据指针变量类型的不同进行地址的操作。</p>
+<hr>
+<p>那么<code>int*</code>与<code>float*</code>可以通用吗？<br>显然不可以，在解引用时对于内存的操作仍是不同的。</p>
 
                 
               </div>
@@ -306,7 +372,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%85%B6%E4%BB%96/" class="category-chain-item">其他</a>
+  <a href="/categories/c%E8%AF%AD%E8%A8%80/" class="category-chain-item">c语言</a>
   
   
 
@@ -321,7 +387,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%9D%82%E8%B0%88/" class="print-no-link">#杂谈</a>
+        <a href="/tags/%E6%8C%87%E9%92%88/" class="print-no-link">#指针</a>
       
     </div>
   
@@ -333,8 +399,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>好久不见。</div>
-      <div>http://jiangno.com/2024/08/23/hello-world/</div>
+      <div>指针初步学习</div>
+      <div>http://jiangno.com/2024/08/25/note/</div>
     </div>
     <div class="license-meta">
       
@@ -346,7 +412,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年8月23日</div>
+          <div>2024年8月25日</div>
         </div>
       
       
@@ -378,15 +444,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/08/25/note/" title="指针初步学习">
+                      <a href="/2024/09/03/24_9_3_timer/" title="51单片机定时器初步学习">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">指针初步学习</span>
+                        <span class="hidden-mobile">51单片机定时器初步学习</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2024/08/23/hello-world/" title="好久不见。">
+                        <span class="hidden-mobile">好久不见。</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
