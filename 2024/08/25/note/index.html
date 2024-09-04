@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s3.bmp.ovh/imgs/2023/07/14/9e5c228fbd105305.jpg">
 <meta property="article:published_time" content="2024-08-25T07:16:01.050Z">
-<meta property="article:modified_time" content="2024-09-03T23:51:29.559Z">
+<meta property="article:modified_time" content="2024-09-04T13:35:21.565Z">
 <meta property="article:author" content="江の">
 <meta property="article:tag" content="指针">
 <meta name="twitter:card" content="summary_large_image">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1k 字
+          1.3k 字
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          9 分钟
+          11 分钟
         
       </span>
     
@@ -388,6 +388,20 @@
 <li>指针变量是一个变量，存放的是地址</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">int</span> arr[<span class="hljs-number">10</span>] = &#123;<span class="hljs-number">0</span>&#125;;<br>    <span class="hljs-type">int</span>* p =arr;<br>    <span class="hljs-comment">//p为首元素地址</span><br>    <span class="hljs-comment">//联系就是数组名</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-二级指针"><a href="#6-二级指针" class="headerlink" title="6.二级指针"></a>6.二级指针</h2><h3 id="6-1什么是二级指针"><a href="#6-1什么是二级指针" class="headerlink" title="6.1什么是二级指针"></a>6.1什么是二级指针</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">int</span> a = <span class="hljs-number">0</span>;<br>    <span class="hljs-type">int</span>* pa = &amp;a;<br>    <span class="hljs-comment">//pa是一个指针变量，一级指针变量。</span><br>    <span class="hljs-comment">//pa也是一个变量，那么能不能对pa也取地址呢?</span><br>    <span class="hljs-type">int</span>** ppa = &amp;pa;<br>    <span class="hljs-comment">//ppa是一个二级指针变量。</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>所以，二级指针是存放一级指针变量的地址</li>
+</ul>
+<h2 id="7-指针数组"><a href="#7-指针数组" class="headerlink" title="7.指针数组"></a>7.指针数组</h2><ul>
+<li>存放指针的数组就是指针数组。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><br><span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span> b = <span class="hljs-number">20</span>;<br><span class="hljs-type">int</span> c = <span class="hljs-number">30</span>;<br><span class="hljs-type">int</span>* pa = &amp;a;<br><span class="hljs-type">int</span>* pb = &amp;b;<br><span class="hljs-type">int</span>* pc = &amp;c;<br><span class="hljs-comment">//parr就是指针数组。</span><br><span class="hljs-type">int</span>* parr[<span class="hljs-number">10</span>] = &#123;&amp;a,&amp;b,&amp;c&#125;;<br><br><br></code></pre></td></tr></table></figure>
+
+<p>可以用作二维数组的一个模拟。</p>
+<p>如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> arr1[<span class="hljs-number">4</span>] = &#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>&#125;;<br><span class="hljs-type">int</span> arr2[<span class="hljs-number">4</span>] = &#123;<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>&#125;;<br><span class="hljs-type">int</span> arr3[<span class="hljs-number">5</span>] = &#123;<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>&#125;;<br><br><span class="hljs-type">int</span>* parr[<span class="hljs-number">3</span>] = &#123;arr1,arr2,arr3&#125;;<br><br><span class="hljs-comment">//打印</span><br><span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>;i &lt; <span class="hljs-number">3</span>;i++)<br>&#123;<br>    <span class="hljs-type">int</span> j = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>;j&lt;<span class="hljs-number">4</span>;j++)<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>,parr[i][j]);<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
                 
               </div>
             
