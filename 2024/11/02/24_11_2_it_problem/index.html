@@ -19,19 +19,19 @@
   <meta name="author" content="江の">
   <meta name="keywords" content="">
   
-    <meta name="description" content="51单片机定时器1.介绍  定时器属于内部资源，其电路与运转都在单片机内部。（也是一种计数器） 1.2定时器作用 用于计时系统，软件计时，以及隔一段时间完成一项操作。 替代长时间的Delay。 多个任务同时执行，提高CPU的运行效率和处理速度。  2.STC89C52的定时器资源 数量：3个（其他定时器不一定为此数量）  3.原理根据时钟信号，经过一段时间来对寄存器操作（加一），我们通过中断来设定">
+    <meta name="description" content="1.起因由于最近正在做全地形小车，为了获取小车的两个编码器电机速度，所以我便想到了使用51单片机的外部中断进行计数，于是我便操作寄存器开启了单片机的外部中断。   代码如下 123456789101112131415#include &lt;REGX52.H&gt;void Ex0_Init()&#123;		IT0 &#x3D; 1;				&#x2F;&#x2F;中断模式设置(1:下降沿触发， 0:低电平触发		EX0 &#x3D;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="51单片机定时器初步学习">
-<meta property="og:url" content="http://jiangno.com/2024/09/03/24_9_3_timer/index.html">
+<meta property="og:title" content="记一次51单片机外部中断问题">
+<meta property="og:url" content="http://jiangno.com/2024/11/02/24_11_2_it_problem/index.html">
 <meta property="og:site_name" content="江の博客">
-<meta property="og:description" content="51单片机定时器1.介绍  定时器属于内部资源，其电路与运转都在单片机内部。（也是一种计数器） 1.2定时器作用 用于计时系统，软件计时，以及隔一段时间完成一项操作。 替代长时间的Delay。 多个任务同时执行，提高CPU的运行效率和处理速度。  2.STC89C52的定时器资源 数量：3个（其他定时器不一定为此数量）  3.原理根据时钟信号，经过一段时间来对寄存器操作（加一），我们通过中断来设定">
+<meta property="og:description" content="1.起因由于最近正在做全地形小车，为了获取小车的两个编码器电机速度，所以我便想到了使用51单片机的外部中断进行计数，于是我便操作寄存器开启了单片机的外部中断。   代码如下 123456789101112131415#include &lt;REGX52.H&gt;void Ex0_Init()&#123;		IT0 &#x3D; 1;				&#x2F;&#x2F;中断模式设置(1:下降沿触发， 0:低电平触发		EX0 &#x3D;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s3.bmp.ovh/imgs/2024/09/04/7bb67334095f892f.png">
-<meta property="article:published_time" content="2024-09-03T14:30:12.105Z">
-<meta property="article:modified_time" content="2024-09-04T04:10:41.804Z">
+<meta property="article:published_time" content="2024-11-02T07:57:22.297Z">
+<meta property="article:modified_time" content="2024-11-02T08:15:32.986Z">
 <meta property="article:author" content="江の">
 <meta property="article:tag" content="51单片机">
-<meta property="article:tag" content="定时器">
+<meta property="article:tag" content="中断">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2024/09/04/7bb67334095f892f.png">
   
@@ -39,7 +39,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>51单片机定时器初步学习 - 江の博客</title>
+  <title>记一次51单片机外部中断问题 - 江の博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="51单片机定时器初步学习"></span>
+            <span id="subtitle" data-typed-text="记一次51单片机外部中断问题"></span>
           
         </div>
 
@@ -216,8 +216,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-09-03 22:30" pubdate>
-          2024年9月3日 晚上
+        <time datetime="2024-11-02 15:57" pubdate>
+          2024年11月2日 下午
         </time>
       </span>
     
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          740 字
+          642 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          7 分钟
+          6 分钟
         
       </span>
     
@@ -276,95 +276,30 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">51单片机定时器初步学习</h1>
+            <h1 id="seo-header">记一次51单片机外部中断问题</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="51单片机定时器"><a href="#51单片机定时器" class="headerlink" title="51单片机定时器"></a>51单片机定时器</h1><h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h2><p>  定时器属于内部资源，其电路与运转都在单片机内部。（也是一种计数器）</p>
-<h3 id="1-2定时器作用"><a href="#1-2定时器作用" class="headerlink" title="1.2定时器作用"></a>1.2定时器作用</h3><ul>
-<li>用于计时系统，软件计时，以及隔一段时间完成一项操作。</li>
-<li>替代长时间的Delay。</li>
-<li>多个任务同时执行，提高CPU的运行效率和处理速度。</li>
-</ul>
-<h2 id="2-STC89C52的定时器资源"><a href="#2-STC89C52的定时器资源" class="headerlink" title="2.STC89C52的定时器资源"></a>2.STC89C52的定时器资源</h2><ul>
-<li>数量：3个（其他定时器不一定为此数量）</li>
-</ul>
-<h2 id="3-原理"><a href="#3-原理" class="headerlink" title="3.原理"></a>3.原理</h2><p>根据时钟信号，经过一段时间来对寄存器操作（加一），我们通过中断来设定何时进行什么任务。</p>
-<h2 id="4-定时器的工作模式"><a href="#4-定时器的工作模式" class="headerlink" title="4.定时器的工作模式"></a>4.定时器的工作模式</h2><ul>
-<li>模式0：13位定时器&#x2F;计数器（少用）</li>
-<li>模式1：16位定时器&#x2F;计数器（常用）</li>
-<li>模式2：8位自动重装模式（少用）</li>
-<li>模式3：两个8位计数器</li>
-</ul>
-<p><strong>以下只讲解模式1</strong></p>
-<p>定时器分为3个部分：</p>
-<ul>
-<li>时钟</li>
-<li>计数器</li>
-<li>中断</li>
-</ul>
-<h3 id="4-1如何计数？"><a href="#4-1如何计数？" class="headerlink" title="4.1如何计数？"></a>4.1如何计数？</h3><p>模式一中计数器由两个8位寄存器组成（最大数即为65535），时钟信号每一个脉冲加1，当加到65535（准确说是65536）时溢出，变为0（此时将申请中断）。</p>
-<h3 id="4-2时钟"><a href="#4-2时钟" class="headerlink" title="4.2时钟"></a>4.2时钟</h3><p>本开发板的晶振为11.0592MHz，但是时钟信号可以由外部引脚（如T0），此时可以作为计数器（一个脉冲+1），若由芯片内部时钟，此时即为计数器。</p>
-<p>时钟信号进入单片机之后，会进行分频（除以12或是除以6？，如果是12Mhz除以12，那么一个周期就是1us）</p>
-<h3 id="4-3中断系统"><a href="#4-3中断系统" class="headerlink" title="4.3中断系统"></a>4.3中断系统</h3><ul>
-<li>中断系统是为cpu具有紧急事件的实时处理能力而设置的。</li>
-<li>当cpu在执行任务时有紧急任务需要处理时，cpu可以暂停转而去处理这个紧急事件，然后再返回到原来被中断的地方，这就是中断系统。</li>
-<li>cpu可以有多个中断源，我们可以为不同中断源设置优先级，cpu总是会首先处理优先级最高的任务（若已经在优先级较低的中断处理中，会停止处理，转而优先级高的中断源（即中断嵌套）。）</li>
-</ul>
-<h4 id="中断系统的资源"><a href="#中断系统的资源" class="headerlink" title="中断系统的资源"></a>中断系统的资源</h4><p>不同系统具有不同的中断资源如：中断源个数不同、中断源优先级不同等。</p>
-<p>89C52单片机中断资源如下：</p>
-<ul>
-<li>中断源个数：8个</li>
-<li>中断优先级个数：4个</li>
-<li>中断号如下表<table>
-<thead>
-<tr>
-<th align="center">序号</th>
-<th>中断源</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">0</td>
-<td>外部中断0</td>
-</tr>
-<tr>
-<td align="center">1</td>
-<td>定时器0</td>
-</tr>
-<tr>
-<td align="center">2</td>
-<td>外部中断1</td>
-</tr>
-<tr>
-<td align="center">3</td>
-<td>定时器1</td>
-</tr>
-<tr>
-<td align="center">4</td>
-<td>串口中断</td>
-</tr>
-<tr>
-<td align="center">5</td>
-<td>定时器2</td>
-</tr>
-<tr>
-<td align="center">6</td>
-<td>外部中断2</td>
-</tr>
-<tr>
-<td align="center">7</td>
-<td>外部中断3</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-<p>中断函数写法：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">Int0_Routine</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> interrupt 0;<br></code></pre></td></tr></table></figure>
+                <h1 id="1-起因"><a href="#1-起因" class="headerlink" title="1.起因"></a>1.起因</h1><p>由于最近正在做全地形小车，为了获取小车的两个编码器电机速度，所以我便想到了使用51单片机的外部中断进行计数，于是我便操作寄存器开启了单片机的外部中断。  </p>
+<p>代码如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;REGX52.H&gt;</span></span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">Ex0_Init</span><span class="hljs-params">()</span><br>&#123;<br>		IT0 = <span class="hljs-number">1</span>;				<span class="hljs-comment">//中断模式设置(1:下降沿触发， 0:低电平触发</span><br>		EX0 = <span class="hljs-number">1</span>;				<span class="hljs-comment">//使能外部中断0</span><br>		EA = <span class="hljs-number">1</span>; 				<span class="hljs-comment">//开总中断</span><br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">Ex1_Init</span><span class="hljs-params">()</span><br>&#123;<br>		IT1 = <span class="hljs-number">1</span>;				<span class="hljs-comment">//中断模式设置(1:下降沿触发， 0:低电平触发</span><br>		EX1 = <span class="hljs-number">1</span>;				<span class="hljs-comment">//使能外部中断1</span><br>		EA = <span class="hljs-number">1</span>; 				<span class="hljs-comment">//开总中断</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>中断优先级，查看手册，或者以此图为参考（51单片机向下兼容，此图也计时器与中断系统的结合）</p>
-<p><img src="https://s3.bmp.ovh/imgs/2024/09/03/025f4f5d25e7b445.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="5-配置"><a href="#5-配置" class="headerlink" title="5.配置"></a>5.配置</h2><p>了解完基本原理，剩下的即为配置寄存器。<br>此图为定时器的寄存器<br><img src="https://s3.bmp.ovh/imgs/2024/09/03/e6d8a2becf9799c8.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="2-问题"><a href="#2-问题" class="headerlink" title="2.问题"></a>2.问题</h1><p>在我开启了两个中断之后，我给下降沿低电平测试，结果发现中断0可以正常工作，中断1死活不能正常工作。于是我尝试更换了单片机芯片，仍然无法解决问题，此时我便排除了芯片问题。那么下一步我便更换了51开发板，发现仍然无法解决问题。此时我便排除了板子的电路问题。</p>
+<p>那么硬件问题全部排除，最终只剩下一种可能。便是软件问题。</p>
+<h1 id="3-解决"><a href="#3-解决" class="headerlink" title="3.解决"></a>3.解决</h1><p>我便翻出stc89c52rc的文档，找出了中断1初始化的配置，如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//External interrupt service routine</span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>  IT1 = <span class="hljs-number">1</span>;<br>  EX1 = <span class="hljs-number">1</span>;<br>  EA = <span class="hljs-number">1</span>;<br><br>  <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>寥寥几行代码，我复制粘贴然后尝试，仍然无法解决。</p>
+<p>此时，我就排除了初始化函数的问题。</p>
+<p>于是我将所有其他函数全部注释。只留下中断，发现能够正常运行！经过我的排查，在我的程序中开启了一个定时器，这个定时器隔一段时间就会运行，然后打断外部中断。</p>
+<p>到此，问题就浮出水面。</p>
+<p>我将外部中断初始化改为以下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;REGX52.H&gt;</span></span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">Ex0_Init</span><span class="hljs-params">()</span><br>&#123;<br>		IT0 = <span class="hljs-number">1</span>;				<span class="hljs-comment">//中断模式设置(1:下降沿触发， 0:低电平触发</span><br>		EX0 = <span class="hljs-number">1</span>;				<span class="hljs-comment">//使能外部中断0</span><br>		EA = <span class="hljs-number">1</span>; 				<span class="hljs-comment">//开总中断</span><br><br><br>		PX0 = <span class="hljs-number">1</span>;<br><br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">Ex1_Init</span><span class="hljs-params">()</span><br>&#123;<br>		IT1 = <span class="hljs-number">1</span>;				<span class="hljs-comment">//中断模式设置(1:下降沿触发， 0:低电平触发</span><br>		EX1 = <span class="hljs-number">1</span>;				<span class="hljs-comment">//使能外部中断1</span><br>		EA = <span class="hljs-number">1</span>; 				<span class="hljs-comment">//开总中断</span><br><br><br>		PX1 = <span class="hljs-number">1</span>;        <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>代码中<code>px1 = 1;</code>与<code>px0 = 0;</code>为新增代码。</p>
+<p>这两句代码给外部中断配置了优先级，使其不被定时器中断打扰。程序正常运行！问题解决。</p>
+<h1 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h1><p><strong>在51单片机中使用多个中断时，务必考虑优先级。</strong><br><strong>在配置任何外设时，务必配置完整，使外设可控。</strong></p>
 
                 
               </div>
@@ -400,7 +335,7 @@
       
         <a href="/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/" class="print-no-link">#51单片机</a>
       
-        <a href="/tags/%E5%AE%9A%E6%97%B6%E5%99%A8/" class="print-no-link">#定时器</a>
+        <a href="/tags/%E4%B8%AD%E6%96%AD/" class="print-no-link">#中断</a>
       
     </div>
   
@@ -412,8 +347,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>51单片机定时器初步学习</div>
-      <div>http://jiangno.com/2024/09/03/24_9_3_timer/</div>
+      <div>记一次51单片机外部中断问题</div>
+      <div>http://jiangno.com/2024/11/02/24_11_2_it_problem/</div>
     </div>
     <div class="license-meta">
       
@@ -425,7 +360,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年9月3日</div>
+          <div>2024年11月2日</div>
         </div>
       
       
@@ -457,18 +392,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/09/08/24_9_8_UART/" title="51单片机串口uart串口初步学习">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">51单片机串口uart串口初步学习</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/08/25/note/" title="指针初步学习">
-                        <span class="hidden-mobile">指针初步学习</span>
+                      <a href="/2024/09/08/24_9_8_UART/" title="51单片机串口uart串口初步学习">
+                        <span class="hidden-mobile">51单片机串口uart串口初步学习</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
