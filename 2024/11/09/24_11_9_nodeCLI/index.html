@@ -19,27 +19,26 @@
   <meta name="author" content="江の">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.起因由于最近正在做全地形小车，为了获取小车的两个编码器电机速度，所以我便想到了使用51单片机的外部中断进行计数，于是我便操作寄存器开启了单片机的外部中断。   代码如下 123456789101112131415#include &lt;REGX52.H&gt;void Ex0_Init()&#123;		IT0 &#x3D; 1;				&#x2F;&#x2F;中断模式设置(1:下降沿触发， 0:低电平触发		EX0 &#x3D;">
+    <meta name="description" content="1.起因最近在写博客时要插入图片，受限于网站带宽，不可能使用上兆大小的图片，所以就需要一个程序来处理高质量的jpg，png图片，所以我便编写了一个命令行工具。此处记录如何创建node的命令行工具，并且直接调用。 示例：hwebp -i .&#x2F;yourdir 2.创建2.1初始化项目创建一个文件夹，并使用命令行工具打开（windows上）。 输入npm init -y来初始化 此时会创建以下项目此时初">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记一次51单片机外部中断问题">
-<meta property="og:url" content="http://jiangno.com/2024/11/02/24_11_2_it_problem/index.html">
+<meta property="og:title" content="node编写命令行工具">
+<meta property="og:url" content="http://jiangno.com/2024/11/09/24_11_9_nodeCLI/index.html">
 <meta property="og:site_name" content="江の博客">
-<meta property="og:description" content="1.起因由于最近正在做全地形小车，为了获取小车的两个编码器电机速度，所以我便想到了使用51单片机的外部中断进行计数，于是我便操作寄存器开启了单片机的外部中断。   代码如下 123456789101112131415#include &lt;REGX52.H&gt;void Ex0_Init()&#123;		IT0 &#x3D; 1;				&#x2F;&#x2F;中断模式设置(1:下降沿触发， 0:低电平触发		EX0 &#x3D;">
+<meta property="og:description" content="1.起因最近在写博客时要插入图片，受限于网站带宽，不可能使用上兆大小的图片，所以就需要一个程序来处理高质量的jpg，png图片，所以我便编写了一个命令行工具。此处记录如何创建node的命令行工具，并且直接调用。 示例：hwebp -i .&#x2F;yourdir 2.创建2.1初始化项目创建一个文件夹，并使用命令行工具打开（windows上）。 输入npm init -y来初始化 此时会创建以下项目此时初">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s3.bmp.ovh/imgs/2024/09/04/7bb67334095f892f.png">
-<meta property="article:published_time" content="2024-11-02T07:57:22.297Z">
-<meta property="article:modified_time" content="2024-11-02T08:15:32.986Z">
+<meta property="og:image" content="https://s3.bmp.ovh/imgs/2024/11/09/cd0b2024f26213a1.webp">
+<meta property="article:published_time" content="2024-11-09T02:45:29.111Z">
+<meta property="article:modified_time" content="2024-11-09T03:23:05.634Z">
 <meta property="article:author" content="江の">
-<meta property="article:tag" content="51单片机">
-<meta property="article:tag" content="中断">
+<meta property="article:tag" content="命令行">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2024/09/04/7bb67334095f892f.png">
+<meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2024/11/09/cd0b2024f26213a1.webp">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>记一次51单片机外部中断问题 - 江の博客</title>
+  <title>node编写命令行工具 - 江の博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="记一次51单片机外部中断问题"></span>
+            <span id="subtitle" data-typed-text="node编写命令行工具"></span>
           
         </div>
 
@@ -216,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-11-02 15:57" pubdate>
-          2024年11月2日 下午
+        <time datetime="2024-11-09 10:45" pubdate>
+          2024年11月9日 上午
         </time>
       </span>
     
@@ -228,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          642 字
+          458 字
         
       </span>
     
@@ -239,7 +238,7 @@
         
         
         
-          6 分钟
+          4 分钟
         
       </span>
     
@@ -276,30 +275,24 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">记一次51单片机外部中断问题</h1>
+            <h1 id="seo-header">node编写命令行工具</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="1-起因"><a href="#1-起因" class="headerlink" title="1.起因"></a>1.起因</h1><p>由于最近正在做全地形小车，为了获取小车的两个编码器电机速度，所以我便想到了使用51单片机的外部中断进行计数，于是我便操作寄存器开启了单片机的外部中断。  </p>
-<p>代码如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;REGX52.H&gt;</span></span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">Ex0_Init</span><span class="hljs-params">()</span><br>&#123;<br>		IT0 = <span class="hljs-number">1</span>;				<span class="hljs-comment">//中断模式设置(1:下降沿触发， 0:低电平触发</span><br>		EX0 = <span class="hljs-number">1</span>;				<span class="hljs-comment">//使能外部中断0</span><br>		EA = <span class="hljs-number">1</span>; 				<span class="hljs-comment">//开总中断</span><br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">Ex1_Init</span><span class="hljs-params">()</span><br>&#123;<br>		IT1 = <span class="hljs-number">1</span>;				<span class="hljs-comment">//中断模式设置(1:下降沿触发， 0:低电平触发</span><br>		EX1 = <span class="hljs-number">1</span>;				<span class="hljs-comment">//使能外部中断1</span><br>		EA = <span class="hljs-number">1</span>; 				<span class="hljs-comment">//开总中断</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h1 id="2-问题"><a href="#2-问题" class="headerlink" title="2.问题"></a>2.问题</h1><p>在我开启了两个中断之后，我给下降沿低电平测试，结果发现中断0可以正常工作，中断1死活不能正常工作。于是我尝试更换了单片机芯片，仍然无法解决问题，此时我便排除了芯片问题。那么下一步我便更换了51开发板，发现仍然无法解决问题。此时我便排除了板子的电路问题。</p>
-<p>那么硬件问题全部排除，最终只剩下一种可能。便是软件问题。</p>
-<h1 id="3-解决"><a href="#3-解决" class="headerlink" title="3.解决"></a>3.解决</h1><p>我便翻出stc89c52rc的文档，找出了中断1初始化的配置，如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//External interrupt service routine</span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>  IT1 = <span class="hljs-number">1</span>;<br>  EX1 = <span class="hljs-number">1</span>;<br>  EA = <span class="hljs-number">1</span>;<br><br>  <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>寥寥几行代码，我复制粘贴然后尝试，仍然无法解决。</p>
-<p>此时，我就排除了初始化函数的问题。</p>
-<p>于是我将所有其他函数全部注释。只留下中断，发现能够正常运行！经过我的排查，在我的程序中开启了一个定时器，这个定时器隔一段时间就会运行，然后打断外部中断。</p>
-<p>到此，问题就浮出水面。</p>
-<p>我将外部中断初始化改为以下代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;REGX52.H&gt;</span></span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">Ex0_Init</span><span class="hljs-params">()</span><br>&#123;<br>		IT0 = <span class="hljs-number">1</span>;				<span class="hljs-comment">//中断模式设置(1:下降沿触发， 0:低电平触发</span><br>		EX0 = <span class="hljs-number">1</span>;				<span class="hljs-comment">//使能外部中断0</span><br>		EA = <span class="hljs-number">1</span>; 				<span class="hljs-comment">//开总中断</span><br><br><br>		PX0 = <span class="hljs-number">1</span>;<br><br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">Ex1_Init</span><span class="hljs-params">()</span><br>&#123;<br>		IT1 = <span class="hljs-number">1</span>;				<span class="hljs-comment">//中断模式设置(1:下降沿触发， 0:低电平触发</span><br>		EX1 = <span class="hljs-number">1</span>;				<span class="hljs-comment">//使能外部中断1</span><br>		EA = <span class="hljs-number">1</span>; 				<span class="hljs-comment">//开总中断</span><br><br><br>		PX1 = <span class="hljs-number">1</span>;        <br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>代码中<code>px1 = 1;</code>与<code>px0 = 0;</code>为新增代码。</p>
-<p>这两句代码给外部中断配置了优先级，使其不被定时器中断打扰。程序正常运行！问题解决。</p>
-<h1 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h1><p><strong>在51单片机中使用多个中断时，务必考虑优先级。</strong><br><strong>在配置任何外设时，务必配置完整，使外设可控。</strong></p>
+                <h1 id="1-起因"><a href="#1-起因" class="headerlink" title="1.起因"></a>1.起因</h1><p>最近在写博客时要插入图片，受限于网站带宽，不可能使用上兆大小的图片，所以就需要一个程序来处理高质量的jpg，png图片，所以我便编写了一个命令行工具。此处记录如何创建node的命令行工具，并且直接调用。</p>
+<p>示例：<code>hwebp -i ./yourdir</code></p>
+<h1 id="2-创建"><a href="#2-创建" class="headerlink" title="2.创建"></a>2.创建</h1><h2 id="2-1初始化项目"><a href="#2-1初始化项目" class="headerlink" title="2.1初始化项目"></a>2.1初始化项目</h2><p>创建一个文件夹，并使用命令行工具打开（windows上）。<br><img src="https://s3.bmp.ovh/imgs/2024/11/09/ad2fb316346a637b.webp" srcset="/img/loading.gif" lazyload></p>
+<p>输入<code>npm init -y</code>来初始化</p>
+<p>此时会创建以下项目<br><img src="https://s3.bmp.ovh/imgs/2024/11/09/8c2867ed155db42a.webp" srcset="/img/loading.gif" lazyload><br>此时初始化已完成。</p>
+<h2 id="2-2修改package-json"><a href="#2-2修改package-json" class="headerlink" title="2.2修改package.json"></a>2.2修改package.json</h2><p>点进去后发现以下内容</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs JSON"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;test&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1.0.0&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;main&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;index.js&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;test&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;keywords&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;author&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;license&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ISC&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><br><span class="hljs-punctuation">&#125;</span><br><br></code></pre></td></tr></table></figure>
+<p>我们需要在文件的第一个大括号内加入以下代码</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs JSON"><span class="hljs-punctuation">&#123;</span><br>...<br><span class="hljs-attr">&quot;bin&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;hwebp&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;./app.js&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br>...<br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<p><code>bin</code>中存放的是你的命令的名字，<code>hwebp</code>就是命令名字，<code>./app.js</code>就是要执行的文件。<br>但此时我们在命令行中输入<code>hwebp -i ./yourdir</code>仍然不行，我们需要告诉操作系统，执行这个文件的程序是什么，在node中即为node.js。</p>
+<h2 id="2-3声明执行程序"><a href="#2-3声明执行程序" class="headerlink" title="2.3声明执行程序"></a>2.3声明执行程序</h2><p>打开app.js<br>若操作系统为windows，在app.js第一行加入<code>#!node</code><br>若操作系统为linux,在app.js第一行加入<code>#!/usr/bin/env node</code></p>
+<h2 id="2-4npm安装自己的命令行工具"><a href="#2-4npm安装自己的命令行工具" class="headerlink" title="2.4npm安装自己的命令行工具"></a>2.4npm安装自己的命令行工具</h2><p>此时保存好自己的修改，再次打开app.js所在文件夹的命令行，输入<code>npm link</code>就可以安装自己的工具了。</p>
+<p>接下来，随便在哪个文件夹的命令行中就可以使用自己的命令行工具了。<br><img src="https://s3.bmp.ovh/imgs/2024/11/09/7c2181b80338cedd.webp" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>
@@ -318,7 +311,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/" class="category-chain-item">单片机</a>
+  <a href="/categories/nodejs/" class="category-chain-item">nodejs</a>
   
   
 
@@ -333,9 +326,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/" class="print-no-link">#51单片机</a>
-      
-        <a href="/tags/%E4%B8%AD%E6%96%AD/" class="print-no-link">#中断</a>
+        <a href="/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C/" class="print-no-link">#命令行</a>
       
     </div>
   
@@ -347,8 +338,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>记一次51单片机外部中断问题</div>
-      <div>http://jiangno.com/2024/11/02/24_11_2_it_problem/</div>
+      <div>node编写命令行工具</div>
+      <div>http://jiangno.com/2024/11/09/24_11_9_nodeCLI/</div>
     </div>
     <div class="license-meta">
       
@@ -360,7 +351,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年11月2日</div>
+          <div>2024年11月9日</div>
         </div>
       
       
@@ -392,18 +383,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/11/09/24_11_8_PCB/" title="记第一次打PCB（51核心板）">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">记第一次打PCB（51核心板）</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/09/08/24_9_8_UART/" title="51单片机串口uart串口初步学习">
-                        <span class="hidden-mobile">51单片机串口uart串口初步学习</span>
+                      <a href="/2024/11/09/24_11_8_PCB/" title="记第一次打PCB（51核心板）">
+                        <span class="hidden-mobile">记第一次打PCB（51核心板）</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
