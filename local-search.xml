@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>线性代数第一章注意点</title>
+    <link href="/2024/12/10/24_12_10%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%AC%AC%E4%B8%80%E7%AB%A0%E5%B0%8F%E7%BB%93/"/>
+    <url>/2024/12/10/24_12_10%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%AC%AC%E4%B8%80%E7%AB%A0%E5%B0%8F%E7%BB%93/</url>
+    
+    <content type="html"><![CDATA[<p>第一章最重要的也就是行列式和克拉默法则，在做题上技巧应该不多，写此文对自己第一章的知识进行复习。</p><h1 id="线性代数第一章注意点">线性代数第一章注意点</h1><h2 id="行列式求解注意">1 行列式求解注意</h2><ul><li>计算行列式一般化成三角行列式，就可以直接求出行列式的值，通法就是将第一行第一列的值转变为1，将一列下面的值全部化为0。</li><li>注意观察和提出公因数。</li><li>范德蒙德行列式计算如下(2 3 4 5需要为等比数列)： <spanclass="math display">\[\begin{Vmatrix}1 &amp;  2 &amp;  2^{2}&amp;  2^{3}\\1 &amp;  3 &amp;  3^{2}&amp;  3^{3}\\1 &amp;  4 &amp;  4^{2}&amp;  4^{3}\\1 &amp;  5 &amp;  5^{2}&amp;  5^{3}\\\end{Vmatrix}  \\= (3-2)\times(4-3)\times(4-2)\times(5-4)\times(5-3)\times(5-2)  \\= 12\]</span> 其实就是大的减小的然后全部相乘。 ## 2 展开定理注意</li><li>注意按行展开为那一行的值乘上对应的<strong>代数余子式！</strong></li><li>若给出如<spanclass="math inline">\(A_{31}-5A_{32}+3A_{33}\)</span>的关于代数余子式的式子，先寻找行列式中有没有对应的行，若没有则可以将代数余子式对应的行改为其给出的系数来求值。<strong>注意：系数可以为零！！</strong></li><li>若用展开定理来求行列式，尽量使对应的行产生尽可能多的<spanclass="math inline">\(0\)</span> ## 3 克拉默法则注意</li><li><strong>应用条件</strong>：方程组个数=未知数个数</li><li>只能用于齐次方程组判断唯一解或非零解？</li></ul><p>第一章目前就这么多注意点。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>其他</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>杂谈</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>STM32F407时钟系统解析</title>
     <link href="/2024/11/29/24_11_29_STM32F407Clock/"/>
     <url>/2024/11/29/24_11_29_STM32F407Clock/</url>
