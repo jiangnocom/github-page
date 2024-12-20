@@ -19,26 +19,28 @@
   <meta name="author" content="江の">
   <meta name="keywords" content="">
   
-    <meta name="description" content="第一章最重要的也就是行列式和克拉默法则，在做题上技巧应该不多，写此文对自己第一章的知识进行复习。 线性代数第一章注意点 1 行列式求解注意  计算行列式一般化成三角行列式，就可以直接求出行列式的值，通法就是将第一行第一列的值转变为1，将一列下面的值全部化为0。 注意观察和提出公因数。 范德蒙德行列式计算如下(2 3 4 5需要为等比数列)： \[ \begin{Vmatrix} 1">
+    <meta name="description" content="ES9018K2M  1.DAC部分 1.1芯片介绍 ES9018K2M是一款ESS公司开发的高性能32位、两声道音频DAC，最高支持384kHz的PCM数据以及DSD-11.2MHz，具有+127dB DNR灵敏度，另外，其拥有较低的功耗，所以常在移动设备上应用。 1.2芯片输入 PCM音频数据通过I2S协议输入，若需控制音量等其他功能则通过I2C协议。由于其默认音量为10">
 <meta property="og:type" content="article">
-<meta property="og:title" content="线性代数第一章注意点">
-<meta property="og:url" content="http://jiangno.com/2024/12/10/24_12_10%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%AC%AC%E4%B8%80%E7%AB%A0%E5%B0%8F%E7%BB%93/index.html">
+<meta property="og:title" content="ES9018k2m解码板">
+<meta property="og:url" content="http://jiangno.com/2024/12/20/24_12_20_ess9018/index.html">
 <meta property="og:site_name" content="江の博客">
-<meta property="og:description" content="第一章最重要的也就是行列式和克拉默法则，在做题上技巧应该不多，写此文对自己第一章的知识进行复习。 线性代数第一章注意点 1 行列式求解注意  计算行列式一般化成三角行列式，就可以直接求出行列式的值，通法就是将第一行第一列的值转变为1，将一列下面的值全部化为0。 注意观察和提出公因数。 范德蒙德行列式计算如下(2 3 4 5需要为等比数列)： \[ \begin{Vmatrix} 1">
+<meta property="og:description" content="ES9018K2M  1.DAC部分 1.1芯片介绍 ES9018K2M是一款ESS公司开发的高性能32位、两声道音频DAC，最高支持384kHz的PCM数据以及DSD-11.2MHz，具有+127dB DNR灵敏度，另外，其拥有较低的功耗，所以常在移动设备上应用。 1.2芯片输入 PCM音频数据通过I2S协议输入，若需控制音量等其他功能则通过I2C协议。由于其默认音量为10">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s3.bmp.ovh/imgs/2024/12/10/14b487dfc57956ea.webp">
-<meta property="article:published_time" content="2024-12-10T12:34:35.137Z">
-<meta property="article:modified_time" content="2024-12-12T11:03:32.091Z">
+<meta property="og:image" content="https://s3.bmp.ovh/imgs/2024/12/20/176f2322cc3351bc.webp">
+<meta property="article:published_time" content="2024-12-20T06:35:33.787Z">
+<meta property="article:modified_time" content="2024-12-20T07:06:08.776Z">
 <meta property="article:author" content="江の">
-<meta property="article:tag" content="杂谈">
+<meta property="article:tag" content="PCB">
+<meta property="article:tag" content="EDA">
+<meta property="article:tag" content="HIFI">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2024/12/10/14b487dfc57956ea.webp">
+<meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2024/12/20/176f2322cc3351bc.webp">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>线性代数第一章注意点 - 江の博客</title>
+  <title>ES9018k2m解码板 - 江の博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +206,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="线性代数第一章注意点"></span>
+            <span id="subtitle" data-typed-text="ES9018k2m解码板"></span>
           
         </div>
 
@@ -215,8 +217,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-10 20:34" pubdate>
-          2024年12月10日 晚上
+        <time datetime="2024-12-20 14:35" pubdate>
+          2024年12月20日 下午
         </time>
       </span>
     
@@ -227,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          397 字
+          480 字
         
       </span>
     
@@ -238,7 +240,7 @@
         
         
         
-          4 分钟
+          5 分钟
         
       </span>
     
@@ -275,43 +277,49 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">线性代数第一章注意点</h1>
+            <h1 id="seo-header">ES9018k2m解码板</h1>
             
             
               <div class="markdown-body">
                 
-                <p>第一章最重要的也就是行列式和克拉默法则，在做题上技巧应该不多，写此文对自己第一章的知识进行复习。</p>
-<h1 id="线性代数第一章注意点">线性代数第一章注意点</h1>
-<h2 id="行列式求解注意">1 行列式求解注意</h2>
+                <figure>
+<img src="https://s3.bmp.ovh/imgs/2024/12/20/176f2322cc3351bc.webp" srcset="/img/loading.gif" lazyload
+alt="ES9018K2M" />
+<figcaption aria-hidden="true">ES9018K2M</figcaption>
+</figure>
+<h1 id="dac部分">1.DAC部分</h1>
+<h2 id="芯片介绍">1.1芯片介绍</h2>
+<p>ES9018K2M是一款ESS公司开发的高性能32位、两声道音频DAC，最高支持384kHz的PCM数据以及DSD-11.2MHz，具有+127dB
+DNR灵敏度，另外，其拥有较低的功耗，所以常在移动设备上应用。</p>
+<h2 id="芯片输入">1.2芯片输入</h2>
+<p>PCM音频数据通过I2S协议输入，若需控制音量等其他功能则通过I2C协议。由于其默认音量为100%，所以无需I2C连接也可以直接输出音频信号。</p>
+<h2 id="芯片输出">1.3芯片输出</h2>
+<p>芯片音频为差分输出，所以之后还要对差分型号进行处理，转为单端信号。</p>
+<h2 id="芯片电源">1.4芯片电源</h2>
+<p>由于其为dac，所以需要对digital（数字）部分单独电源，以及analog(模拟)部分单独电源，芯片上还额外需要一个VCCA,所以一共为3个电源。如图：
+<img src="https://s3.bmp.ovh/imgs/2024/12/20/ba62017ee8bfdca5.webp" srcset="/img/loading.gif" lazyload />
+pcb上还需要对电源的滤波，其余元件基本为电容。 <img
+src="https://s3.bmp.ovh/imgs/2024/12/20/aa83b883d95e7211.webp" srcset="/img/loading.gif" lazyload /></p>
+<h1 id="运放部分">2.运放部分</h1>
+<h2 id="运放芯片介绍">2.1运放芯片介绍</h2>
+<p>JRC4580，内部包括有两个独立的、高增益、低噪声，
+输出电流大，低失真的运算放大器，适合于音频前置放大部分和有源滤波器，大电流输出的耳机放大器，
+<img
+src="https://s3.bmp.ovh/imgs/2024/12/20/3c1a7d70e73c6dbe.webp" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="运放输入与输出">2.2运放输入与输出</h2>
+<p>运放部分为纯纯的模拟电路，此部分目前为借鉴电路，作用为差分转单端信号，随后进行一个放大与低通滤波（主要滤除20000HZ以上高频信号），这里的电容需要用NG0材质的电容，暂时不知道原因。
+<img
+src="https://s3.bmp.ovh/imgs/2024/12/20/2f0c2f1c35d4af26.webp" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="运放电源">2.3运放电源</h2>
+<p>由于音频信号电压有正有负，则需要正负电源给运放供电，此处供电为正负12v。</p>
+<p>（正负电源挖坑。。）</p>
+<h2 id="pcb总体设计">3.PCB总体设计</h2>
 <ul>
-<li>计算行列式一般化成三角行列式，就可以直接求出行列式的值，通法就是将第一行第一列的值转变为1，将一列下面的值全部化为0。</li>
-<li>注意观察和提出公因数。</li>
-<li>范德蒙德行列式计算如下(2 3 4 5需要为等比数列)： <span
-class="math display">\[
-\begin{Vmatrix}
-1 &amp;  2 &amp;  2^{2}&amp;  2^{3}\\
-1 &amp;  3 &amp;  3^{2}&amp;  3^{3}\\
-1 &amp;  4 &amp;  4^{2}&amp;  4^{3}\\
-1 &amp;  5 &amp;  5^{2}&amp;  5^{3}\\
-\end{Vmatrix}
-  \\= (3-2)\times(4-3)\times(4-2)\times(5-4)\times(5-3)\times(5-2)
-  \\= 12
-\]</span> 其实就是大的减小的然后全部相乘。</li>
+<li>区分数字地与模拟地，数字地与模拟地用0Ω电阻连接。</li>
+<li>注意滤波电容先过大再过小。</li>
 </ul>
-<h2 id="展开定理注意">2 展开定理注意</h2>
-<ul>
-<li>注意按行展开为那一行的值乘上对应的<strong>代数余子式！</strong></li>
-<li>若给出如<span
-class="math inline">\(A_{31}-5A_{32}+3A_{33}\)</span>的关于代数余子式的式子，先寻找行列式中有没有对应的行，若没有则可以将代数余子式对应的行改为其给出的系数来求值。<strong>注意：系数可以为零！！</strong></li>
-<li>若用展开定理来求行列式，尽量使对应的行产生尽可能多的<span
-class="math inline">\(0\)</span></li>
-</ul>
-<h2 id="克拉默法则注意">3 克拉默法则注意</h2>
-<ul>
-<li><strong>应用条件</strong>：方程组个数=未知数个数</li>
-<li>只能用于齐次方程组判断唯一解或非零解？</li>
-</ul>
-<p>第一章目前就这么多注意点。</p>
+<p><img
+src="https://s3.bmp.ovh/imgs/2024/12/20/c5e2026a80e8d6a2.webp" srcset="/img/loading.gif" lazyload /></p>
 
                 
               </div>
@@ -330,7 +338,7 @@ class="math inline">\(0\)</span></li>
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%85%B6%E4%BB%96/" class="category-chain-item">其他</a>
+  <a href="/categories/EDA/" class="category-chain-item">EDA</a>
   
   
 
@@ -345,7 +353,11 @@ class="math inline">\(0\)</span></li>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%9D%82%E8%B0%88/" class="print-no-link">#杂谈</a>
+        <a href="/tags/PCB/" class="print-no-link">#PCB</a>
+      
+        <a href="/tags/EDA/" class="print-no-link">#EDA</a>
+      
+        <a href="/tags/HIFI/" class="print-no-link">#HIFI</a>
       
     </div>
   
@@ -357,8 +369,8 @@ class="math inline">\(0\)</span></li>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>线性代数第一章注意点</div>
-      <div>http://jiangno.com/2024/12/10/24_12_10线性代数第一章小结/</div>
+      <div>ES9018k2m解码板</div>
+      <div>http://jiangno.com/2024/12/20/24_12_20_ess9018/</div>
     </div>
     <div class="license-meta">
       
@@ -370,7 +382,7 @@ class="math inline">\(0\)</span></li>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年12月10日</div>
+          <div>2024年12月20日</div>
         </div>
       
       
