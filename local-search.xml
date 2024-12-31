@@ -4,11 +4,40 @@
   
   
   <entry>
+    <title>使用HEXO和GitHubPage搭建Blog</title>
+    <link href="/2024/12/31/24_12_31_make_blog_hexo/"/>
+    <url>/2024/12/31/24_12_31_make_blog_hexo/</url>
+    
+    <content type="html"><![CDATA[<h1 id="简述">简述</h1><p>大部分人印象中的网站常常都遥不可及，但是现在资源丰富的互联网早就已经给了解网站提供了很多信息渠道与免费资源。</p><p>如题所言，本文将使用<ahref="https://hexo.io/zh-cn/">hexo(一个博客框架)</a>与<ahref="https://pages.github.com/">GitHubPage</a>（一个页面托管平台）来搭建一个博客，我也不会去仔细深究网站背后的工作原理，主要一笔带过。</p><p>若想搭建博客，就得先搭建一个网站，之后在这个网站框架下再加入新内容，所以本文分三步，</p><ul><li>先使用github来搭建静态页面（<ahref="https://blog.csdn.net/xgb2018/article/details/114079542">什么是静态页面？</a>）</li><li>然后再搭建hexo框架来创建博客</li><li>最后再hexo中更换博客的主题以及如何写作与上传。</li></ul><h1 id="搭建页面">1.搭建页面</h1><h2 id="注册github账号">1.1注册GitHub账号</h2><p>打开<a href="https://github.com">Github</a> <imgsrc="https://s3.bmp.ovh/imgs/2024/12/31/0ba11813f9fddf6a.webp" />找到右上角Sign up按钮 ，点击后按照引导注册。</p><p>（什么？看不懂英文？。。。）</p><p>注册完毕后登录。</p><h2 id="创建仓库">1.2创建仓库</h2><p>登陆后找到顶端加号按钮，点击。 <imgsrc="https://s3.bmp.ovh/imgs/2024/12/31/ae9505cf4b8b0655.webp" /></p><p>然后再点击New repository <imgsrc="https://s3.bmp.ovh/imgs/2024/12/31/6f7c92e8861fe185.webp" /></p><p>如下界面，根据提示自行填写，但public选项一定要勾选。 <imgsrc="https://s3.bmp.ovh/imgs/2024/12/31/e8f1cc4b092b4bdd.webp" /></p><p>创建完后跳到这个页面，我们可以在这个仓库里上传代码或其他文件，由于我们创建网站，我们必须要创建一个<code>index.html</code>作为网站的首页。</p><p><imgsrc="https://s3.bmp.ovh/imgs/2024/12/31/a994db7a52259e85.webp" /></p><p>为了创建这个文件，我们可以新建一个文本文件（txt）,输入以下代码<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Document<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Jiangno test<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br><br></code></pre></td></tr></table></figure></p><p>之后另存为index.html(<strong>注意：文件后缀名为html而不是提txt</strong>)</p><p>这时我们就可以点击图中的超链接来上传<code>index.html</code> <imgsrc="https://s3.bmp.ovh/imgs/2024/12/31/a994db7a52259e85.webp" /></p><h2 id="设置github-page">1.3设置github page</h2><p>点击仓库界面菜单的<code>Settings</code> <imgsrc="https://s3.bmp.ovh/imgs/2024/12/31/db44c6c9bbf8d689.webp" /></p><p>在左侧点击<code>Pages</code> <imgsrc="https://s3.bmp.ovh/imgs/2024/12/31/e833741cebb363ba.webp" />将Branch下的设置改为如图。之后等待几分钟，刷新一下页面，就会变为下图<img src="https://s3.bmp.ovh/imgs/2024/12/31/006f2b39657259ba.webp" />此时点击visit site按钮就可以访问我们自己的页面了！ <imgsrc="https://s3.bmp.ovh/imgs/2024/12/31/e5824ce79a0b9e8d.webp" /></p><p><strong>这里的域名就是 Github用户名+github.io/仓库名的格式</strong></p><h1 id="小结">1.4小结</h1><p>所以这么一个静态页面的网站就是由一个html文件来支撑的，每次更新网站就是对html文件的更新，这样的缺点就是无法进行评论，点赞之类需要数据库的操作，所以想要更新页面只能手动操作，这就是githubpage的缺点。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>网站</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>node</tag>
+      
+      <tag>hexo</tag>
+      
+      <tag>博客</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>ES9018k2m解码板</title>
     <link href="/2024/12/20/24_12_20_ess9018/"/>
     <url>/2024/12/20/24_12_20_ess9018/</url>
     
-    <content type="html"><![CDATA[<figure><img src="https://s3.bmp.ovh/imgs/2024/12/20/176f2322cc3351bc.webp"alt="ES9018K2M" /><figcaption aria-hidden="true">ES9018K2M</figcaption></figure><h1 id="dac部分">1.DAC部分</h1><h2 id="芯片介绍">1.1芯片介绍</h2><p>ES9018K2M是一款ESS公司开发的高性能32位、两声道音频DAC，最高支持384kHz的PCM数据以及DSD-11.2MHz，具有+127dBDNR灵敏度，另外，其拥有较低的功耗，所以常在移动设备上应用。</p><h2 id="芯片输入">1.2芯片输入</h2><p>PCM音频数据通过I2S协议输入，若需控制音量等其他功能则通过I2C协议。由于其默认音量为100%，所以无需I2C连接也可以直接输出音频信号。</p><h2 id="芯片输出">1.3芯片输出</h2><p>芯片音频为差分输出，所以之后还要对差分型号进行处理，转为单端信号。</p><h2 id="芯片电源">1.4芯片电源</h2><p>由于其为dac，所以需要对digital（数字）部分单独电源，以及analog(模拟)部分单独电源，芯片上还额外需要一个VCCA,所以一共为3个电源。如图：<img src="https://s3.bmp.ovh/imgs/2024/12/20/ba62017ee8bfdca5.webp" />pcb上还需要对电源的滤波，其余元件基本为电容。 <imgsrc="https://s3.bmp.ovh/imgs/2024/12/20/aa83b883d95e7211.webp" /></p><h1 id="运放部分">2.运放部分</h1><h2 id="运放芯片介绍">2.1运放芯片介绍</h2><p>JRC4580，内部包括有两个独立的、高增益、低噪声，输出电流大，低失真的运算放大器，适合于音频前置放大部分和有源滤波器，大电流输出的耳机放大器，<imgsrc="https://s3.bmp.ovh/imgs/2024/12/20/3c1a7d70e73c6dbe.webp" /></p><h2 id="运放输入与输出">2.2运放输入与输出</h2><p>运放部分为纯纯的模拟电路，此部分目前为借鉴电路，作用为差分转单端信号，随后进行一个放大与低通滤波（主要滤除20000HZ以上高频信号），这里的电容需要用NG0材质的电容，暂时不知道原因。<imgsrc="https://s3.bmp.ovh/imgs/2024/12/20/2f0c2f1c35d4af26.webp" /></p><h2 id="运放电源">2.3运放电源</h2><p>由于音频信号电压有正有负，则需要正负电源给运放供电，此处供电为正负12v。</p><p>（正负电源挖坑。。）</p><h2 id="pcb总体设计">3.PCB总体设计</h2><ul><li>区分数字地与模拟地，数字地与模拟地用0Ω电阻连接。</li><li>注意滤波电容先过大再过小。</li></ul><p><imgsrc="https://s3.bmp.ovh/imgs/2024/12/20/c5e2026a80e8d6a2.webp" /></p>]]></content>
+    <content type="html"><![CDATA[<figure><img src="https://s3.bmp.ovh/imgs/2024/12/20/176f2322cc3351bc.webp"alt="ES9018K2M" /><figcaption aria-hidden="true">ES9018K2M</figcaption></figure><h1 id="dac部分">1.DAC部分</h1><h2 id="芯片介绍">1.1芯片介绍</h2><p>ES9018K2M是一款ESS公司开发的高性能32位、两声道音频DAC，最高支持384kHz的PCM数据以及DSD-11.2MHz，具有+127dBDNR动态范围，另外，其拥有较低的功耗，所以常在移动设备上应用。</p><h2 id="芯片输入">1.2芯片输入</h2><p>PCM音频数据通过I2S协议输入，若需控制音量等其他功能则通过I2C协议。由于其默认音量为100%，所以无需I2C连接也可以直接输出音频信号。</p><h2 id="芯片输出">1.3芯片输出</h2><p>芯片音频为差分输出，所以之后还要对差分型号进行处理，转为单端信号。</p><h2 id="芯片电源">1.4芯片电源</h2><p>由于其为dac，所以需要对digital（数字）部分单独电源，以及analog(模拟)部分单独电源，芯片上还额外需要一个VCCA,所以一共为3个电源。如图：<img src="https://s3.bmp.ovh/imgs/2024/12/20/ba62017ee8bfdca5.webp" />pcb上还需要对电源的滤波，其余元件基本为电容。 <imgsrc="https://s3.bmp.ovh/imgs/2024/12/20/aa83b883d95e7211.webp" /></p><h1 id="运放部分">2.运放部分</h1><h2 id="运放芯片介绍">2.1运放芯片介绍</h2><p>JRC4580，内部包括有两个独立的、高增益、低噪声，输出电流大，低失真的运算放大器，适合于音频前置放大部分和有源滤波器，大电流输出的耳机放大器，<imgsrc="https://s3.bmp.ovh/imgs/2024/12/20/3c1a7d70e73c6dbe.webp" /></p><h2 id="运放输入与输出">2.2运放输入与输出</h2><p>运放部分为纯纯的模拟电路，此部分目前为借鉴电路，作用为差分转单端信号，随后进行一个放大与低通滤波（主要滤除20000HZ以上高频信号），这里的电容需要用NG0材质的电容，暂时不知道原因。<imgsrc="https://s3.bmp.ovh/imgs/2024/12/20/2f0c2f1c35d4af26.webp" /></p><h2 id="运放电源">2.3运放电源</h2><p>由于音频信号电压有正有负，则需要正负电源给运放供电，此处供电为正负12v。</p><p>（正负电源挖坑。。）</p><h2 id="pcb总体设计">3.PCB总体设计</h2><ul><li>区分数字地与模拟地，数字地与模拟地用0Ω电阻连接。</li><li>注意滤波电容先过大再过小。</li></ul><p><imgsrc="https://s3.bmp.ovh/imgs/2024/12/20/c5e2026a80e8d6a2.webp" /></p>]]></content>
     
     
     <categories>
