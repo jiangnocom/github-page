@@ -1,0 +1,1017 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://s3.bmp.ovh/imgs/2024/08/23/81a2ab67181a58b6.jpg">
+  <link rel="icon" href="https://s3.bmp.ovh/imgs/2024/08/23/81a2ab67181a58b6.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="江の">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="新年好。 一.简述 在学习stm32f4时，我想要做一个项目来充分发挥f4系列的性能，正巧我对音频与UI比较感兴趣，于是我便选定了音乐播放器这个项目。 首先，我从项目名进行项目特点分析。 1.1 高品质（DAC，解码，WAV） 自然界中的音频是一种波，音源通过推动空气振动来传递能量，最终人耳鼓膜受迫振动转化为电信号传递给大脑。 而描述一个波的物理量就是频率与振幅，电脑如果需要存储高品质">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高品质音乐播放器（基于STM32F407）">
+<meta property="og:url" content="http://jiangno.com/2025/02/27/25_2_27_audioplayer/index.html">
+<meta property="og:site_name" content="江の博客">
+<meta property="og:description" content="新年好。 一.简述 在学习stm32f4时，我想要做一个项目来充分发挥f4系列的性能，正巧我对音频与UI比较感兴趣，于是我便选定了音乐播放器这个项目。 首先，我从项目名进行项目特点分析。 1.1 高品质（DAC，解码，WAV） 自然界中的音频是一种波，音源通过推动空气振动来传递能量，最终人耳鼓膜受迫振动转化为电信号传递给大脑。 而描述一个波的物理量就是频率与振幅，电脑如果需要存储高品质">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s3.bmp.ovh/imgs/2025/02/25/4d60849221edca27.jpg">
+<meta property="article:published_time" content="2025-02-27T12:30:38.332Z">
+<meta property="article:modified_time" content="2025-02-27T12:52:32.411Z">
+<meta property="article:author" content="江の">
+<meta property="article:tag" content="硬件">
+<meta property="article:tag" content="stm32">
+<meta property="article:tag" content="HIFI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2025/02/25/4d60849221edca27.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>高品质音乐播放器（基于STM32F407） - 江の博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jiangno.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jiangno</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://s3.bmp.ovh/imgs/2023/01/27/1c64dbc5dd4dfae4.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="高品质音乐播放器（基于STM32F407）"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-02-27 20:30" pubdate>
+          2025年2月27日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          69 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">高品质音乐播放器（基于STM32F407）</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>新年好。</p>
+<h1 id="一.简述">一.简述</h1>
+<p>在学习stm32f4时，我想要做一个项目来充分发挥f4系列的性能，正巧我对音频与UI比较感兴趣，于是我便选定了音乐播放器这个项目。</p>
+<p>首先，我从项目名进行项目特点分析。</p>
+<h2 id="高品质dac解码wav">1.1 高品质（DAC，解码，WAV）</h2>
+<p>自然界中的音频是一种波，音源通过推动空气振动来传递能量，最终人耳鼓膜受迫振动转化为电信号传递给大脑。</p>
+<p>而描述一个波的物理量就是频率与振幅，电脑如果需要存储高品质的音频那就是要确保频率与振幅被完整存储下来，而描述音频文件的存储质量的就是位深与采样频率。</p>
+<p><img
+src="https://s3.bmp.ovh/imgs/2025/02/25/062464b83a462a82.jpg" srcset="/img/loading.gif" lazyload /></p>
+<p>这张图中，纵轴的长度（振幅）就由位深确定，横轴的每个单位左边之间的长度（频率）就由采样率决定。</p>
+<p>所以通过采样率与位深就可以确定一个点的坐标，确定了点就可以画线即确定了音频波形。</p>
+<p>那么怎么确保音频采样频率与位深足够呢？</p>
+<p>香农采样定理就指出，采样频率大于原始信号频率的二倍即可，而人耳最大可听频率为20-20000Hz,只要确保采样率大于40000Hz即可。</p>
+<p>而一般音乐的分贝数不会超过90分贝，16bit位深就足以存储98dB（动态范围）的音乐。</p>
+<p>这就是CD级音质的由来 44100Hz 16bit 未压缩音频。</p>
+<p>而WAV格式中直接存储了波形的未压缩原始数据，且无需进行过多解码，既满足音质也降低了对mcu性能的要求。</p>
+<p>于是本项目最终支持48kHz 24bit
+WAV格式音频的播放，所以称其为高品质。</p>
+<h2 id="播放器显示进度播放切歌">1.2 播放器（显示进度，播放切歌）</h2>
+<p><img src="https://s3.bmp.ovh/imgs/2025/02/25/4d60849221edca27.jpg" srcset="/img/loading.gif" lazyload />
+仅仅只能播放音频是远远不够的，还需要与用户交互的界面，</p>
+<p>本项目使用了spi屏幕（lil9341），来显示</p>
+<ul>
+<li>播放列表</li>
+<li>播放操作（暂停，下一首，上一首，音量）</li>
+<li>播放进度（进度条）</li>
+<li>播放信息（采样率 位深 歌曲名（支持中文显示））</li>
+</ul>
+<p>通过实体按钮来操作ui。</p>
+<h2 id="基于stm32f407">1.3 基于STM32F407</h2>
+<ul>
+<li>具有168
+MHz的Cortex™-M4内核，速度较快，能够满足解码音频与屏幕刷新任务，</li>
+<li>具有DMA和I2S能够快速输出32位的音频数据。</li>
+<li>具有FSMC能够连接外部SRAM满足UI组件以及文件系统的内存需求。</li>
+<li>具有SDIO,能够快速读取SD卡内容获取音频数据</li>
+<li>192kb SRAM</li>
+</ul>
+<h1 id="二.硬件">二.硬件</h1>
+<p>接下来，我根据音频数据的传输方向讲解硬件的构成。</p>
+<h2 id="sd卡">2.1 SD卡</h2>
+<p>首先音频数据存储在SD卡中。</p>
+<p>SD卡具有高容量、速度快和体积小的特点，stm32最快能够以5.4M/s的速度来读取数据，足以满足音频的要求。</p>
+<p>以下是硬件连接。 <img
+src="https://s3.bmp.ovh/imgs/2025/02/25/59323ecadfc56820.webp" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="stm32f407">2.2 STM32F407</h2>
+<p>存储在SD卡中的数据被MCU读取出来进行解码操作，再显示再屏幕上，最终通过DMA到达I2S发送到DAC(数模转换器)。</p>
+<h2 id="daces9018或开发板自带的wm8978">2.3
+DAC（ES9018或开发板自带的WM8978）</h2>
+<p>在此之前的所有数据都是以二进制存储的，若将这些数据直接输出只会得到表示1、0的高低电平，这些离散的数字信号需要被转化为连续的模拟信号才可以。</p>
+<p>这就需要DAC芯片来将数字信号来转化为模拟信号，而在音频领域，MCU与音频DAC的通信就是通过前文提及的I2S协议。
+<img
+src="https://s3.bmp.ovh/imgs/2025/02/25/b92653b4bc6b6571.jpg" srcset="/img/loading.gif" lazyload /></p>
+<p>为了达到音频还原的高品质，就需要低失真，高信噪比，高动态范围，高码率的DAC。</p>
+<p>这里我预留了两个选择即 - WM8978(STM32F407开发板自带) - ES9018K2m</p>
+<h3 id="wm8978">2.3.1 WM8978</h3>
+<p>特性如下： - I2S 最高支持192kHz 24bit - 信噪比98dB - 40mW@16Ω的驱动力
+- I2C控制 - QFN封装 体积小。 <img
+src="https://s3.bmp.ovh/imgs/2025/02/25/54590a258f24ab1f.jpg" srcset="/img/loading.gif" lazyload /></p>
+<p>硬件连接</p>
+<p><img
+src="https://s3.bmp.ovh/imgs/2025/02/25/6405c1e7b2e55304.webp" srcset="/img/loading.gif" lazyload /></p>
+<p>由于这个芯片已停产，且内置耳机驱动推力一般，信噪比也一般比不过ess公司的es9018，在测试时使用WM8978。</p>
+<h3 id="es9018">2.3.2 es9018</h3>
+<p>ess公司在高端音频DAC的性价比高，音频指标高，被许多公司使用，如oppo。</p>
+<p>特性如下 - I2S 最高支持384kHz 32bit -
+支持DSD（索尼与飞利浦发明的一种音频格式）输入 - 信噪比127dB -
+120dB动态范围 - I2C控制 - 差分信号输出（低失真，抗干扰）</p>
+<p>由于其无法直接驱动耳机，所以后面需要耳放电路，这里就使用了以往的项目，ESS9018k2m解码板。</p>
+<p><img
+src="https://s3.bmp.ovh/imgs/2024/12/20/3c1a7d70e73c6dbe.webp" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="扬声器">2.4 扬声器</h2>
+<p>扬声器内部本质就是一个线圈+磁铁，线圈通过电流后根据电流大小产生磁场，磁场与磁铁相互作用推动空气，产生震动。</p>
+<p>这里的扬声器直接接在了pwm_audio.</p>
+<p><img
+src="https://s3.bmp.ovh/imgs/2025/02/25/6405c1e7b2e55304.webp" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="sram">2.5 SRAM</h2>
+<p>虽然stm32f4内存很大，但是UI控件与文件系统需要许多内存，于是我使用了外置SRAM
+IS62WV51216，具有1MB的内存，足够ui，文件系统以及未来的RTOS使用。</p>
+<p><img
+src="https://s3.bmp.ovh/imgs/2025/02/25/977af8a8312720cb.webp" srcset="/img/loading.gif" lazyload /></p>
+<p>在硬件连接上，需要将sram的地址线与数据线与mcu的FSMC相连，这里要注意的是不将数据线与地址线混淆即可</p>
+<h2 id="按键">2.6 按键</h2>
+<p>无需多讲。 <img
+src="https://s3.bmp.ovh/imgs/2025/02/25/58f400ad2f283ecd.webp" srcset="/img/loading.gif" lazyload /> ## 2.7
+SPI显示屏
+在显示方面，使用了ili9341显示屏，带有触摸模块（暂未使用），分辨率为320x280px，能够满足对文字，按键的显示。</p>
+<p>硬件连接只需提供电源，连接好spi即可。</p>
+<h1 id="三.软件">三.软件</h1>
+<p>由于本项目实时性较高，需要格外注意对音频信号实时输出的把控，注意对音频处理的阻塞。</p>
+<h2 id="外设部分">3.1 外设部分</h2>
+<h3 id="i2s">3.1.1 I2S</h3>
+<p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c"> <span class="hljs-type">void</span> <span class="hljs-title function_">I2S2_Init</span><span class="hljs-params">(u16 I2S_Standard,u16 I2S_Mode,u16 I2S_Clock_Polarity,u16 I2S_DataFormat)</span><br> &#123; <br> I2S_InitTypeDef I2S_InitStructure;<br><br>RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);<span class="hljs-comment">//使能SPI2时钟</span><br><br>RCC_APB1PeriphResetCmd(RCC_APB1Periph_SPI2,ENABLE); <span class="hljs-comment">//复位SPI2</span><br>RCC_APB1PeriphResetCmd(RCC_APB1Periph_SPI2,DISABLE);<span class="hljs-comment">//结束复位</span><br> <br>I2S_InitStructure.I2S_Mode=I2S_Mode;<span class="hljs-comment">//IIS模式</span><br>I2S_InitStructure.I2S_Standard=I2S_Standard;<span class="hljs-comment">//IIS标准</span><br>I2S_InitStructure.I2S_DataFormat=I2S_DataFormat;<span class="hljs-comment">//IIS数据长度</span><br>I2S_InitStructure.I2S_MCLKOutput=I2S_MCLKOutput_Disable;<span class="hljs-comment">//主时钟输出禁止</span><br>I2S_InitStructure.I2S_AudioFreq=I2S_AudioFreq_Default;<span class="hljs-comment">//IIS频率设置</span><br>I2S_InitStructure.I2S_CPOL=I2S_Clock_Polarity;<span class="hljs-comment">//空闲状态时钟电平</span><br>I2S_Init(SPI2,&amp;I2S_InitStructure);<span class="hljs-comment">//初始化IIS</span><br><br><br>SPI_I2S_DMACmd(SPI2,SPI_I2S_DMAReq_Tx,ENABLE);<span class="hljs-comment">//SPI2 TX DMA请求使能.</span><br> I2S_Cmd(SPI2,ENABLE);<span class="hljs-comment">//SPI2 I2S EN使能.	</span><br> &#125;；<br><br></code></pre></td></tr></table></figure></p>
+<p>i2s的DMA <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs c"> <span class="hljs-type">void</span> <span class="hljs-title function_">I2S2_TX_DMA_Init</span><span class="hljs-params">(u8* buf0,u8 *buf1,u16 num)</span><br> &#123;  <br>NVIC_InitTypeDef   NVIC_InitStructure;<br>DMA_InitTypeDef  DMA_InitStructure;<br><br><br> RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1,ENABLE);<span class="hljs-comment">//DMA1时钟使能 </span><br><br>DMA_DeInit(DMA1_Stream4);<br><span class="hljs-keyword">while</span> (DMA_GetCmdStatus(DMA1_Stream4) != DISABLE)&#123;&#125;<span class="hljs-comment">//等待DMA1_Stream1可配置 </span><br>	<br> <span class="hljs-comment">/* 配置 DMA Stream */</span><br><br> DMA_InitStructure.DMA_Channel = DMA_Channel_0;  <span class="hljs-comment">//通道0 SPI2_TX通道 </span><br> DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)&amp;SPI2-&gt;DR;<span class="hljs-comment">//外设地址为:(u32)&amp;SPI2-&gt;DR</span><br> DMA_InitStructure.DMA_Memory0BaseAddr = (u32)buf0;<span class="hljs-comment">//DMA 存储器0地址</span><br> DMA_InitStructure.DMA_DIR = DMA_DIR_MemoryToPeripheral;<span class="hljs-comment">//存储器到外设模式</span><br> DMA_InitStructure.DMA_BufferSize = num;<span class="hljs-comment">//数据传输量 </span><br> DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;<span class="hljs-comment">//外设非增量模式</span><br> DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;<span class="hljs-comment">//存储器增量模式</span><br> DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;<span class="hljs-comment">//外设数据长度:16位</span><br> DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;<span class="hljs-comment">//存储器数据长度：16位 </span><br> DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;<span class="hljs-comment">// 使用循环模式 </span><br> DMA_InitStructure.DMA_Priority = DMA_Priority_High;<span class="hljs-comment">//高优先级</span><br> DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable; <span class="hljs-comment">//不使用FIFO模式        </span><br> DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_1QuarterFull;<br> DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;<span class="hljs-comment">//外设突发单次传输</span><br> DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;<span class="hljs-comment">//存储器突发单次传输</span><br> DMA_Init(DMA1_Stream4, &amp;DMA_InitStructure);<span class="hljs-comment">//初始化DMA Stream</span><br><br>DMA_DoubleBufferModeConfig(DMA1_Stream4,(u32)buf1,DMA_Memory_0);<span class="hljs-comment">//双缓冲模式配置</span><br><br> DMA_DoubleBufferModeCmd(DMA1_Stream4,ENABLE);<span class="hljs-comment">//双缓冲模式开启</span><br><br> DMA_ITConfig(DMA1_Stream4,DMA_IT_TC,ENABLE);<span class="hljs-comment">//开启传输完成中断</span><br><br>NVIC_InitStructure.NVIC_IRQChannel = DMA1_Stream4_IRQn; <br> NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = <span class="hljs-number">0x00</span>;<span class="hljs-comment">//抢占优先级0</span><br> NVIC_InitStructure.NVIC_IRQChannelSubPriority = <span class="hljs-number">0x00</span>;<span class="hljs-comment">//子优先级0</span><br> NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;<span class="hljs-comment">//使能外部中断通道</span><br> NVIC_Init(&amp;NVIC_InitStructure);<span class="hljs-comment">//配置</span><br> <br> &#125;  <br></code></pre></td></tr></table></figure></p>
+<h3 id="i2c">3.1.2 I2C</h3>
+<pre><code class="hljs">使用正点原子软件i2c</code></pre>
+<ul>
+<li>KEY</li>
+<li>LCD</li>
+</ul>
+<h3 id="sd">3.1.3 SD</h3>
+<p><img
+src="https://s3.bmp.ovh/imgs/2025/02/25/febdc15c4432b3cf.webp" srcset="/img/loading.gif" lazyload />
+总的来说，初始化时就是对sd卡发命令等待回应，来进行一次一次的判断。在代码层面就是定义结构体，传参调用函数。</p>
+<p>而读取数据就是发出某一个命令后发出地址即可从fifo中遍历出数据。</p>
+<h3 id="fsmcsram">3.1.4 FSMC(SRAM)</h3>
+<pre><code class="hljs"><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">FSMC_SRAM_Init</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br><span class="hljs-comment">// 初始化GPIO口</span><br>GPIO_InitTypeDef GPIO_InitStructure;<br>FSMC_NORSRAMInitTypeDef FSMC_NORSRAMInitStructure;<br>FSMC_NORSRAMTimingInitTypeDef readWriteTiming;<br><br>RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB | RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOE | RCC_AHB1Periph_GPIOF | RCC_AHB1Periph_GPIOG, ENABLE);<br>RCC_AHB3PeriphClockCmd(RCC_AHB3Periph_FSMC, ENABLE);<br><br>GPIO_InitStructure.GPIO_Pin = (<span class="hljs-number">3</span> &lt;&lt; <span class="hljs-number">0</span>) | (<span class="hljs-number">3</span> &lt;&lt; <span class="hljs-number">4</span>) | (<span class="hljs-number">0xff</span> &lt;&lt; <span class="hljs-number">8</span>);<br>GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;<br>GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;<br>GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;<br>GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;<br>GPIO_Init(GPIOD, &amp;GPIO_InitStructure);<br><br>GPIO_InitStructure.GPIO_Pin = (<span class="hljs-number">3</span> &lt;&lt; <span class="hljs-number">0</span>) | (<span class="hljs-number">0X1FF</span> &lt;&lt; <span class="hljs-number">7</span>); <span class="hljs-comment">// PE0,1,7~15,AF OUT</span><br>GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;           <span class="hljs-comment">// 复用输出</span><br>GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;         <span class="hljs-comment">// 推挽输出</span><br>GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;     <span class="hljs-comment">// 100MHz</span><br>GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;           <span class="hljs-comment">// 上拉</span><br>GPIO_Init(GPIOE, &amp;GPIO_InitStructure);                 <span class="hljs-comment">// 初始化</span><br><br>GPIO_InitStructure.GPIO_Pin = (<span class="hljs-number">0X3F</span> &lt;&lt; <span class="hljs-number">0</span>) | (<span class="hljs-number">0XF</span> &lt;&lt; <span class="hljs-number">12</span>); <span class="hljs-comment">// PF0~5,12~15</span><br>GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;             <span class="hljs-comment">// 复用输出</span><br>GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;           <span class="hljs-comment">// 推挽输出</span><br>GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;       <span class="hljs-comment">// 100MHz</span><br>GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;             <span class="hljs-comment">// 上拉</span><br>GPIO_Init(GPIOF, &amp;GPIO_InitStructure);                   <span class="hljs-comment">// 初始化</span><br><br>GPIO_InitStructure.GPIO_Pin = (<span class="hljs-number">0X3F</span> &lt;&lt; <span class="hljs-number">0</span>) | GPIO_Pin_10; <span class="hljs-comment">// PG0~5,10</span><br>GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;             <span class="hljs-comment">// 复用输出</span><br>GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;           <span class="hljs-comment">// 推挽输出</span><br>GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;       <span class="hljs-comment">// 100MHz</span><br>GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;             <span class="hljs-comment">// 上拉</span><br>GPIO_Init(GPIOG, &amp;GPIO_InitStructure);                   <span class="hljs-comment">// 初始化</span><br><br>GPIO_PinAFConfig(GPIOD, GPIO_PinSource0, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOD, GPIO_PinSource1, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOD, GPIO_PinSource4, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOD, GPIO_PinSource5, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOD, GPIO_PinSource8, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOD, GPIO_PinSource9, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOD, GPIO_PinSource10, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOD, GPIO_PinSource11, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOD, GPIO_PinSource12, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOD, GPIO_PinSource13, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOD, GPIO_PinSource14, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOD, GPIO_PinSource15, GPIO_AF_FSMC);<br><br>GPIO_PinAFConfig(GPIOE, GPIO_PinSource0, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOE, GPIO_PinSource1, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOE, GPIO_PinSource7, GPIO_AF_FSMC); <span class="hljs-comment">// PE7,AF12</span><br>GPIO_PinAFConfig(GPIOE, GPIO_PinSource8, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOE, GPIO_PinSource9, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOE, GPIO_PinSource10, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOE, GPIO_PinSource11, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOE, GPIO_PinSource12, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOE, GPIO_PinSource13, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOE, GPIO_PinSource14, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOE, GPIO_PinSource15, GPIO_AF_FSMC); <span class="hljs-comment">// PE15,AF12</span><br><br>GPIO_PinAFConfig(GPIOF, GPIO_PinSource0, GPIO_AF_FSMC);  <span class="hljs-comment">// PF0,AF12</span><br>GPIO_PinAFConfig(GPIOF, GPIO_PinSource1, GPIO_AF_FSMC);  <span class="hljs-comment">// PF1,AF12</span><br>GPIO_PinAFConfig(GPIOF, GPIO_PinSource2, GPIO_AF_FSMC);  <span class="hljs-comment">// PF2,AF12</span><br>GPIO_PinAFConfig(GPIOF, GPIO_PinSource3, GPIO_AF_FSMC);  <span class="hljs-comment">// PF3,AF12</span><br>GPIO_PinAFConfig(GPIOF, GPIO_PinSource4, GPIO_AF_FSMC);  <span class="hljs-comment">// PF4,AF12</span><br>GPIO_PinAFConfig(GPIOF, GPIO_PinSource5, GPIO_AF_FSMC);  <span class="hljs-comment">// PF5,AF12</span><br>GPIO_PinAFConfig(GPIOF, GPIO_PinSource12, GPIO_AF_FSMC); <span class="hljs-comment">// PF12,AF12</span><br>GPIO_PinAFConfig(GPIOF, GPIO_PinSource13, GPIO_AF_FSMC); <span class="hljs-comment">// PF13,AF12</span><br>GPIO_PinAFConfig(GPIOF, GPIO_PinSource14, GPIO_AF_FSMC); <span class="hljs-comment">// PF14,AF12</span><br>GPIO_PinAFConfig(GPIOF, GPIO_PinSource15, GPIO_AF_FSMC); <span class="hljs-comment">// PF15,AF12</span><br><br>GPIO_PinAFConfig(GPIOG, GPIO_PinSource0, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOG, GPIO_PinSource1, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOG, GPIO_PinSource2, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOG, GPIO_PinSource3, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOG, GPIO_PinSource4, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOG, GPIO_PinSource5, GPIO_AF_FSMC);<br>GPIO_PinAFConfig(GPIOG, GPIO_PinSource10, GPIO_AF_FSMC);<br><br>readWriteTiming.FSMC_AccessMode = FSMC_AccessMode_A;<br>readWriteTiming.FSMC_AddressHoldTime = <span class="hljs-number">0x00</span>;<br>readWriteTiming.FSMC_AddressSetupTime = <span class="hljs-number">0x00</span>;<br>readWriteTiming.FSMC_BusTurnAroundDuration = <span class="hljs-number">0x00</span>;<br>readWriteTiming.FSMC_CLKDivision = <span class="hljs-number">0x00</span>;<br>readWriteTiming.FSMC_DataLatency = <span class="hljs-number">0x00</span>;<br>readWriteTiming.FSMC_DataSetupTime = <span class="hljs-number">0x08</span>;<br><br>FSMC_NORSRAMInitStructure.FSMC_AsynchronousWait = FSMC_AsynchronousWait_Disable;<br>FSMC_NORSRAMInitStructure.FSMC_Bank = FSMC_Bank1_NORSRAM3;<br>FSMC_NORSRAMInitStructure.FSMC_BurstAccessMode = FSMC_BurstAccessMode_Disable;<br>FSMC_NORSRAMInitStructure.FSMC_DataAddressMux = FSMC_DataAddressMux_Disable;<br>FSMC_NORSRAMInitStructure.FSMC_ExtendedMode = FSMC_ExtendedMode_Disable;<br>FSMC_NORSRAMInitStructure.FSMC_MemoryDataWidth = FSMC_MemoryDataWidth_16b;<br>FSMC_NORSRAMInitStructure.FSMC_MemoryType = FSMC_MemoryType_SRAM;<br>FSMC_NORSRAMInitStructure.FSMC_ReadWriteTimingStruct = &amp;readWriteTiming;<br>FSMC_NORSRAMInitStructure.FSMC_WaitSignal = FSMC_WaitSignalPolarity_Low;<br>FSMC_NORSRAMInitStructure.FSMC_WaitSignalActive = FSMC_WaitSignalActive_BeforeWaitState;<br>FSMC_NORSRAMInitStructure.FSMC_WaitSignalPolarity = FSMC_WaitSignalPolarity_High;<br>FSMC_NORSRAMInitStructure.FSMC_WrapMode = FSMC_WrapMode_Disable;<br>FSMC_NORSRAMInitStructure.FSMC_WriteBurst = FSMC_WriteBurst_Disable;<br>FSMC_NORSRAMInitStructure.FSMC_WriteOperation = FSMC_WriteOperation_Enable;<br>FSMC_NORSRAMInitStructure.FSMC_WriteTimingStruct = &amp;readWriteTiming;<br><br>FSMC_NORSRAMInit(&amp;FSMC_NORSRAMInitStructure); <span class="hljs-comment">// 初始化FSMC配置</span><br><br>FSMC_NORSRAMCmd(FSMC_Bank1_NORSRAM3, ENABLE); <span class="hljs-comment">// 使能BANK1区域3</span><br>&#125;<br><br>以上配置就可以让标准库自动连接SRAM并且映射到<span class="hljs-number">0x6800000</span>开始的，即FSMC_Bank1_NORSRAM3的地址。<br></code></pre></td></tr></table></figure></code></pre>
+<h3 id="wm8978-1">3.1.5 WM8978</h3>
+<pre><code class="hljs">只需要配置好gpio，i2c后按照手册发送命令。
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c">   IIC_Init();<span class="hljs-comment">//初始化IIC接口</span><br>res=WM8978_Write_Reg(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);	<span class="hljs-comment">//软复位WM8978</span><br><span class="hljs-keyword">if</span>(res)<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;			<span class="hljs-comment">//发送指令失败,WM8978异常</span><br><span class="hljs-comment">//以下为通用设置</span><br>WM8978_Write_Reg(<span class="hljs-number">1</span>,<span class="hljs-number">0X1B</span>);	<span class="hljs-comment">//R1,MICEN设置为1(MIC使能),BIASEN设置为1(模拟器工作),VMIDSEL[1:0]设置为:11(5K)</span><br>WM8978_Write_Reg(<span class="hljs-number">2</span>,<span class="hljs-number">0X1B0</span>);	<span class="hljs-comment">//R2,ROUT1,LOUT1输出使能(耳机可以工作),BOOSTENR,BOOSTENL使能</span><br>WM8978_Write_Reg(<span class="hljs-number">3</span>,<span class="hljs-number">0X6C</span>);	<span class="hljs-comment">//R3,LOUT2,ROUT2输出使能(喇叭工作),RMIX,LMIX使能	</span><br>WM8978_Write_Reg(<span class="hljs-number">6</span>,<span class="hljs-number">0</span>);		<span class="hljs-comment">//R6,MCLK由外部提供</span><br>WM8978_Write_Reg(<span class="hljs-number">43</span>,<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">4</span>);	<span class="hljs-comment">//R43,INVROUT2反向,驱动喇叭</span><br>   <span class="hljs-comment">//以下为mic配置</span><br>WM8978_Write_Reg(<span class="hljs-number">47</span>,<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">8</span>);	<span class="hljs-comment">//R47设置,PGABOOSTL,左通道MIC获得20倍增益</span><br>WM8978_Write_Reg(<span class="hljs-number">48</span>,<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">8</span>);	<span class="hljs-comment">//R48设置,PGABOOSTR,右通道MIC获得20倍增益</span><br>WM8978_Write_Reg(<span class="hljs-number">49</span>,<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">1</span>);	<span class="hljs-comment">//R49,TSDEN,开启过热保护 </span><br>WM8978_Write_Reg(<span class="hljs-number">10</span>,<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">3</span>);	<span class="hljs-comment">//R10,SOFTMUTE关闭,128x采样,最佳SNR </span><br>WM8978_Write_Reg(<span class="hljs-number">14</span>,<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">3</span>);	<span class="hljs-comment">//R14,ADC 128x采样率</span><br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure></code></pre>
+<!-- ### 3.1.6 UART -->
+<h2 id="文件部分">3.2 文件部分</h2>
+<ul>
+<li><p>FATFS
+为了管理像sd卡这种大容量存储，若直接存储二进制就无法保证文件的快速访问，文件的安全性。所以在这种存储中通常会以一定格式来存储这些文件的数据，常有的就有NTFS（windows）,fat,exfat,hfs(苹果)。在SD卡中常用fat格式，而为了解码读取出fat文件格式中的文件数据，在mcu中我们就用FATFS来读取，写入fat文件格式。</p>
+<p><strong><em>FATFS是一个免费开源的FAT
+文件系统模块，专门为小型的嵌入式系统而设计。完全用标准C
+语言编写，所以具有良好的硬件平台独立性。可以移植到8051、PIC、AVR、SH、Z80、H8、ARM
+等系列单片机上而只需做简单的修改。它支持FATl2、FATl6
+和FAT32，支持多个存储媒介；有独立的缓冲区，可以对多个文件进行读／写，并特别对8
+位单片机和16 位单片机做了优化。</em></strong></p></li>
+</ul>
+<p>在这个项目中只需要引入三个头文件并且在fatfs中定义好sd卡读取写入函数和malloc函数即可
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;ff.h&quot;</span><span class="hljs-comment">//fatfs库本体</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;exfuns.h&quot;</span><span class="hljs-comment">//判断文件类型</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;fattester.h&quot;</span><span class="hljs-comment">//封装了一些文件读取，目录访问的函数</span></span><br></code></pre></td></tr></table></figure></p>
+<ul>
+<li>MALLOC
+由于stm32f407内存大且使用了外部sram,如此大的内存就需要合理的管理，本项目实现了一个malloc。</li>
+</ul>
+<p>这个malloc将内存平分为一块一块，这里将每32字节分为一块
+每块对应内存管理表中的一项
+这个表就可以当作一个数组，每次malloc时z只需要访问数组找到空的元素，计算出空内存块的地址即可。
+若释放内存就操作数组重置元素即可。</p>
+<table>
+<tbody>
+<tr>
+<td>块1</td>
+<td>未占用</td>
+</tr>
+<tr>
+<td>块2</td>
+<td>未占用</td>
+</tr>
+<tr>
+<td>块3</td>
+<td>未占用</td>
+</tr>
+<tr>
+<td>块4</td>
+<td>占用</td>
+</tr>
+</tbody>
+</table>
+<p>这里只演示外部sram</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//mem2内存参数设定.mem2的内存池处于外部SRAM里面</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MEM2_BLOCK_SIZE			32  	  						<span class="hljs-comment">//内存块大小为32字节</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MEM2_MAX_SIZE			1024 *1024  						<span class="hljs-comment">//最大管理内存1M</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MEM2_ALLOC_TABLE_SIZE	MEM2_MAX_SIZE/MEM2_BLOCK_SIZE 	<span class="hljs-comment">//内存表大小</span></span><br><br><span class="hljs-comment">// 内存池 </span><br>__align(<span class="hljs-number">32</span>) u8 mem2base[MEM2_MAX_SIZE] __attribute__((at(<span class="hljs-number">0X68000000</span>)));<br><span class="hljs-comment">// 内存管理表</span><br>u16 mem2mapbase[MEM2_ALLOC_TABLE_SIZE] __attribute__((at(<span class="hljs-number">0X68000000</span> + MEM2_MAX_SIZE)));<br><span class="hljs-comment">// 内存管理参数</span><br><span class="hljs-type">const</span> u32 memblksize[SRAMBANK] = &#123;MEM1_BLOCK_SIZE, MEM2_BLOCK_SIZE, MEM3_BLOCK_SIZE&#125;;<br><br><br><span class="hljs-comment">///////////////////////////////////////////////////////////////////////////////////////////</span><br><br><br>u32 <span class="hljs-title function_">my_mem_malloc</span><span class="hljs-params">(u8 memx, u32 size)</span><br>&#123;<br>    <span class="hljs-type">signed</span> <span class="hljs-type">long</span> offset = <span class="hljs-number">0</span>;<br>    u32 nmemb;     <span class="hljs-comment">// 需要的内存块数</span><br>    u32 cmemb = <span class="hljs-number">0</span>; <span class="hljs-comment">// 连续空内存数</span><br>    u32 i;<br>    <span class="hljs-keyword">if</span> (!malloc_dev.memrdy[memx])<br>        malloc_dev.init(memx);<br>    <span class="hljs-keyword">if</span> (size == <span class="hljs-number">0</span>)<span class="hljs-keyword">return</span> <span class="hljs-number">0xFFFFFFFF</span>; <span class="hljs-comment">// 不需要分配</span><br>    nmemb = size / memblksize[memx];<br>    <span class="hljs-keyword">if</span> (size % memblksize[memx])<br>        nmemb++;<br>    <span class="hljs-keyword">for</span> (offset = memtblsize[memx] - <span class="hljs-number">1</span>; offset &gt;= <span class="hljs-number">0</span>; offset--)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (!malloc_dev.memmap[memx][offset])<br>            cmemb++;<br>        <span class="hljs-keyword">else</span><br>            cmemb = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">if</span> (cmemb == nmemb)<br>        &#123;<br>            <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; nmemb; i++)<br>            &#123;<br>                malloc_dev.memmap[memx][offset + i] = nmemb;<br>            &#125;<br>            <span class="hljs-keyword">return</span> (offset * memblksize[memx]);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0xFFFFFFFF</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<h2 id="显示部分">3.3 显示部分</h2>
+<p><img
+src="https://s3.bmp.ovh/imgs/2025/02/27/5fd8cf72546e7785.webp" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="tft屏">3.3.1 tft屏</h3>
+<p>调用spi,操作spi发送指令。</p>
+<h3 id="lvgl">3.3.2 LVGL</h3>
+<p>LVGL是一个开源的轻量级图形库，内置了许多控件，任务管理系统。
+移植的时候需要给定屏幕的画点函数。（在lvgl库目录下的porting/lv_port_disp.c）</p>
+<p>由于lvgl内置了任务系统，所以需要心跳来让lvgld对任务进行时间分配，这里直接放入main函数的while循环即可。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;lvgl.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;gui_guider.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;events_init.h&quot;</span></span><br> <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>    lv_tick_inc(<span class="hljs-number">1</span>);    <span class="hljs-comment">// tick单位是ms，设置为5ms即可，一般只要有值就行。</span><br>    lv_task_handler(); <span class="hljs-comment">// 这个比较重要，从名字就能知道他是用来运行lvgl的task的</span><br> &#125;<br></code></pre></td></tr></table></figure>
+<h3 id="gui-guider">3.3.3 GUI-GUIDER</h3>
+<p>GUI
+Guider是恩智浦提供的用户友好型图形用户界面开发工具，通俗讲就是只需要拖拽操作就可以创建出页面，能够快速画出页面
+<img src="https://s3.bmp.ovh/imgs/2025/02/25/d19560c3bf6e99eb.webp" srcset="/img/loading.gif" lazyload />
+画完页面只需要导出代码，加入项目目录、引用头文件就可以创建页面。</p>
+<p><img
+src="https://s3.bmp.ovh/imgs/2025/02/27/60d90ccb5c0f85b1.webp" srcset="/img/loading.gif" lazyload /></p>
+<p>以上是导出的gui文件夹</p>
+<p>其中最主要的是<code>setui_scr_screen.c</code>与<code>setup_scr_screen1.c</code>这两个文件中存储了所有ui对象。</p>
+<p>这里仅以screen和播放按钮为例： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">setup_scr_screen</span><span class="hljs-params">(lv_ui *ui)</span>&#123;<br><br>	<span class="hljs-comment">//Write codes screen</span><br>	ui-&gt;screen = lv_obj_create(<span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>);<br><br>	<span class="hljs-comment">//Write style LV_OBJ_PART_MAIN for screen</span><br>	<span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_screen_main;<br>	lv_style_reset(&amp;style_screen_main);<br><br>	<span class="hljs-comment">//Write style state: LV_STATE_DEFAULT for style_screen_main</span><br>	lv_style_set_bg_color(&amp;style_screen_main, LV_STATE_DEFAULT, lv_color_make(<span class="hljs-number">0xe8</span>, <span class="hljs-number">0xe8</span>, <span class="hljs-number">0xe8</span>));<br>	lv_style_set_bg_opa(&amp;style_screen_main, LV_STATE_DEFAULT, <span class="hljs-number">0</span>);<br>	lv_obj_add_style(ui-&gt;screen, LV_OBJ_PART_MAIN, &amp;style_screen_main);<br><br>	<span class="hljs-comment">//Write codes screen_btn_4</span><br>	ui-&gt;screen_btn_4 = lv_btn_create(ui-&gt;screen, <span class="hljs-literal">NULL</span>);<br><br>	<span class="hljs-comment">//Write style LV_BTN_PART_MAIN for screen_btn_4</span><br>	<span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_screen_btn_4_main;<br>	lv_style_reset(&amp;style_screen_btn_4_main);<br><br>	<span class="hljs-comment">//Write style state: LV_STATE_DEFAULT for style_screen_btn_4_main</span><br>	lv_style_set_radius(&amp;style_screen_btn_4_main, LV_STATE_DEFAULT, <span class="hljs-number">50</span>);<br>	lv_style_set_bg_color(&amp;style_screen_btn_4_main, LV_STATE_DEFAULT, lv_color_make(<span class="hljs-number">0xff</span>, <span class="hljs-number">0xff</span>, <span class="hljs-number">0xff</span>));<br>	lv_style_set_bg_grad_color(&amp;style_screen_btn_4_main, LV_STATE_DEFAULT, lv_color_make(<span class="hljs-number">0xff</span>, <span class="hljs-number">0xff</span>, <span class="hljs-number">0xff</span>));<br>	lv_style_set_bg_grad_dir(&amp;style_screen_btn_4_main, LV_STATE_DEFAULT, LV_GRAD_DIR_NONE);<br>	lv_style_set_bg_opa(&amp;style_screen_btn_4_main, LV_STATE_DEFAULT, <span class="hljs-number">255</span>);<br>	lv_style_set_shadow_color(&amp;style_screen_btn_4_main, LV_STATE_DEFAULT, lv_color_make(<span class="hljs-number">0x6f</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x69</span>));<br>	lv_style_set_shadow_width(&amp;style_screen_btn_4_main, LV_STATE_DEFAULT, <span class="hljs-number">0</span>);<br>	lv_style_set_shadow_opa(&amp;style_screen_btn_4_main, LV_STATE_DEFAULT, <span class="hljs-number">255</span>);<br>	lv_style_set_shadow_spread(&amp;style_screen_btn_4_main, LV_STATE_DEFAULT, <span class="hljs-number">0</span>);<br>	lv_style_set_shadow_ofs_x(&amp;style_screen_btn_4_main, LV_STATE_DEFAULT, <span class="hljs-number">0</span>);<br>	lv_style_set_shadow_ofs_y(&amp;style_screen_btn_4_main, LV_STATE_DEFAULT, <span class="hljs-number">0</span>);<br>	lv_style_set_border_color(&amp;style_screen_btn_4_main, LV_STATE_DEFAULT, lv_color_make(<span class="hljs-number">0x01</span>, <span class="hljs-number">0xa2</span>, <span class="hljs-number">0xb1</span>));<br>	lv_style_set_border_width(&amp;style_screen_btn_4_main, LV_STATE_DEFAULT, <span class="hljs-number">2</span>);<br>	lv_style_set_border_opa(&amp;style_screen_btn_4_main, LV_STATE_DEFAULT, <span class="hljs-number">255</span>);<br>	lv_style_set_text_color(&amp;style_screen_btn_4_main, LV_STATE_DEFAULT, lv_color_make(<span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>));<br>	lv_style_set_text_font(&amp;style_screen_btn_4_main, LV_STATE_DEFAULT, &amp;lv_font_chinese_12);<br><br>	<span class="hljs-comment">//Write style state: LV_STATE_FOCUSED for style_screen_btn_4_main</span><br>	lv_style_set_radius(&amp;style_screen_btn_4_main, LV_STATE_FOCUSED, <span class="hljs-number">50</span>);<br>	lv_style_set_bg_color(&amp;style_screen_btn_4_main, LV_STATE_FOCUSED, lv_color_make(<span class="hljs-number">0xff</span>, <span class="hljs-number">0xff</span>, <span class="hljs-number">0xff</span>));<br>	lv_style_set_bg_grad_color(&amp;style_screen_btn_4_main, LV_STATE_FOCUSED, lv_color_make(<span class="hljs-number">0xff</span>, <span class="hljs-number">0xff</span>, <span class="hljs-number">0xff</span>));<br>	lv_style_set_bg_grad_dir(&amp;style_screen_btn_4_main, LV_STATE_FOCUSED, LV_GRAD_DIR_NONE);<br>	lv_style_set_bg_opa(&amp;style_screen_btn_4_main, LV_STATE_FOCUSED, <span class="hljs-number">255</span>);<br>	lv_style_set_shadow_color(&amp;style_screen_btn_4_main, LV_STATE_FOCUSED, lv_color_make(<span class="hljs-number">0x6f</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x59</span>));<br>	lv_style_set_shadow_width(&amp;style_screen_btn_4_main, LV_STATE_FOCUSED, <span class="hljs-number">0</span>);<br>	lv_style_set_shadow_opa(&amp;style_screen_btn_4_main, LV_STATE_FOCUSED, <span class="hljs-number">255</span>);<br>	lv_style_set_shadow_spread(&amp;style_screen_btn_4_main, LV_STATE_FOCUSED, <span class="hljs-number">0</span>);<br>	lv_style_set_shadow_ofs_x(&amp;style_screen_btn_4_main, LV_STATE_FOCUSED, <span class="hljs-number">0</span>);<br>	lv_style_set_shadow_ofs_y(&amp;style_screen_btn_4_main, LV_STATE_FOCUSED, <span class="hljs-number">0</span>);<br>	lv_style_set_border_color(&amp;style_screen_btn_4_main, LV_STATE_FOCUSED, lv_color_make(<span class="hljs-number">0x01</span>, <span class="hljs-number">0xa2</span>, <span class="hljs-number">0xb1</span>));<br>	lv_style_set_border_width(&amp;style_screen_btn_4_main, LV_STATE_FOCUSED, <span class="hljs-number">2</span>);<br>	lv_style_set_border_opa(&amp;style_screen_btn_4_main, LV_STATE_FOCUSED, <span class="hljs-number">255</span>);<br>	lv_style_set_text_color(&amp;style_screen_btn_4_main, LV_STATE_FOCUSED, lv_color_make(<span class="hljs-number">0xf0</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>));<br>	lv_style_set_text_font(&amp;style_screen_btn_4_main, LV_STATE_FOCUSED, &amp;lv_font_chinese_12);<br><br>	<span class="hljs-comment">//Write style state: LV_STATE_PRESSED for style_screen_btn_4_main</span><br>	lv_style_set_radius(&amp;style_screen_btn_4_main, LV_STATE_PRESSED, <span class="hljs-number">50</span>);<br>	lv_style_set_bg_color(&amp;style_screen_btn_4_main, LV_STATE_PRESSED, lv_color_make(<span class="hljs-number">0xff</span>, <span class="hljs-number">0xff</span>, <span class="hljs-number">0xff</span>));<br>	lv_style_set_bg_grad_color(&amp;style_screen_btn_4_main, LV_STATE_PRESSED, lv_color_make(<span class="hljs-number">0xff</span>, <span class="hljs-number">0xff</span>, <span class="hljs-number">0xff</span>));<br>	lv_style_set_bg_grad_dir(&amp;style_screen_btn_4_main, LV_STATE_PRESSED, LV_GRAD_DIR_NONE);<br>	lv_style_set_bg_opa(&amp;style_screen_btn_4_main, LV_STATE_PRESSED, <span class="hljs-number">255</span>);<br>	lv_style_set_shadow_color(&amp;style_screen_btn_4_main, LV_STATE_PRESSED, lv_color_make(<span class="hljs-number">0x21</span>, <span class="hljs-number">0x95</span>, <span class="hljs-number">0xf6</span>));<br>	lv_style_set_shadow_width(&amp;style_screen_btn_4_main, LV_STATE_PRESSED, <span class="hljs-number">0</span>);<br>	lv_style_set_shadow_opa(&amp;style_screen_btn_4_main, LV_STATE_PRESSED, <span class="hljs-number">255</span>);<br>	lv_style_set_shadow_spread(&amp;style_screen_btn_4_main, LV_STATE_PRESSED, <span class="hljs-number">0</span>);<br>	lv_style_set_shadow_ofs_x(&amp;style_screen_btn_4_main, LV_STATE_PRESSED, <span class="hljs-number">0</span>);<br>	lv_style_set_shadow_ofs_y(&amp;style_screen_btn_4_main, LV_STATE_PRESSED, <span class="hljs-number">0</span>);<br>	lv_style_set_border_color(&amp;style_screen_btn_4_main, LV_STATE_PRESSED, lv_color_make(<span class="hljs-number">0x01</span>, <span class="hljs-number">0xa2</span>, <span class="hljs-number">0xb1</span>));<br>	lv_style_set_border_width(&amp;style_screen_btn_4_main, LV_STATE_PRESSED, <span class="hljs-number">2</span>);<br>	lv_style_set_border_opa(&amp;style_screen_btn_4_main, LV_STATE_PRESSED, <span class="hljs-number">255</span>);<br>	lv_style_set_text_color(&amp;style_screen_btn_4_main, LV_STATE_PRESSED, lv_color_make(<span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>));<br>	lv_style_set_text_font(&amp;style_screen_btn_4_main, LV_STATE_PRESSED, &amp;lv_font_chinese_12);<br><br>	<span class="hljs-comment">//Write style state: LV_STATE_DISABLED for style_screen_btn_4_main</span><br>	lv_style_set_radius(&amp;style_screen_btn_4_main, LV_STATE_DISABLED, <span class="hljs-number">50</span>);<br>	lv_style_set_bg_color(&amp;style_screen_btn_4_main, LV_STATE_DISABLED, lv_color_make(<span class="hljs-number">0xaa</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x1a</span>));<br>	lv_style_set_bg_grad_color(&amp;style_screen_btn_4_main, LV_STATE_DISABLED, lv_color_make(<span class="hljs-number">0xff</span>, <span class="hljs-number">0xff</span>, <span class="hljs-number">0xff</span>));<br>	lv_style_set_bg_grad_dir(&amp;style_screen_btn_4_main, LV_STATE_DISABLED, LV_GRAD_DIR_NONE);<br>	lv_style_set_bg_opa(&amp;style_screen_btn_4_main, LV_STATE_DISABLED, <span class="hljs-number">255</span>);<br>	lv_style_set_border_color(&amp;style_screen_btn_4_main, LV_STATE_DISABLED, lv_color_make(<span class="hljs-number">0x01</span>, <span class="hljs-number">0xa2</span>, <span class="hljs-number">0xb1</span>));<br>	lv_style_set_border_width(&amp;style_screen_btn_4_main, LV_STATE_DISABLED, <span class="hljs-number">2</span>);<br>	lv_style_set_border_opa(&amp;style_screen_btn_4_main, LV_STATE_DISABLED, <span class="hljs-number">255</span>);<br>	lv_style_set_outline_color(&amp;style_screen_btn_4_main, LV_STATE_DISABLED, lv_color_make(<span class="hljs-number">0xd4</span>, <span class="hljs-number">0xd7</span>, <span class="hljs-number">0xd9</span>));<br>	lv_style_set_outline_opa(&amp;style_screen_btn_4_main, LV_STATE_DISABLED, <span class="hljs-number">255</span>);<br>	lv_obj_add_style(ui-&gt;screen_btn_4, LV_BTN_PART_MAIN, &amp;style_screen_btn_4_main);<br>	lv_obj_set_pos(ui-&gt;screen_btn_4, <span class="hljs-number">212</span>, <span class="hljs-number">17</span>);<br>	lv_obj_set_size(ui-&gt;screen_btn_4, <span class="hljs-number">96</span>, <span class="hljs-number">47</span>);<br>	ui-&gt;screen_btn_4_label = lv_label_create(ui-&gt;screen_btn_4, <span class="hljs-literal">NULL</span>);<br>	lv_label_set_text(ui-&gt;screen_btn_4_label, <span class="hljs-string">&quot;播放&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>其实guiguider的主要作用就是生成lvgl样式(style)对象减轻ui开发负担。</p>
+<p>最终将这些对象都集合在一个结构体中： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span></span><br><span class="hljs-class">&#123;</span><br>	<span class="hljs-type">lv_obj_t</span> *screen;<br>	<span class="hljs-type">bool</span> screen_del;<br>	<span class="hljs-type">lv_obj_t</span> *screen_btn_4;<br>	<span class="hljs-type">lv_obj_t</span> *screen_btn_4_label;<br>	<span class="hljs-type">lv_obj_t</span> *screen_label_1;<br>	<span class="hljs-type">lv_obj_t</span> *screen_label_2;<br>	<span class="hljs-type">lv_obj_t</span> *screen_list_1;<br>	<span class="hljs-type">lv_obj_t</span> *screen_btn_5;<br>	<span class="hljs-type">lv_obj_t</span> *screen_btn_5_label;<br>	<span class="hljs-type">lv_obj_t</span> *screen_btn_6;<br>	<span class="hljs-type">lv_obj_t</span> *screen_btn_6_label;<br>	<span class="hljs-type">lv_obj_t</span> *screen_bar_1;<br>	<span class="hljs-type">lv_obj_t</span> *screen_btn_7;<br>	<span class="hljs-type">lv_obj_t</span> *screen_btn_7_label;<br>	<span class="hljs-type">lv_obj_t</span> *screen_btn_8;<br>	<span class="hljs-type">lv_obj_t</span> *screen_btn_8_label;<br>	<span class="hljs-type">lv_obj_t</span> *screen_bar_2;<br>	<span class="hljs-type">lv_obj_t</span> *screen_1;<br>	<span class="hljs-type">bool</span> screen_1_del;<br>	<span class="hljs-type">lv_obj_t</span> *screen_1_bar_1;<br>	<span class="hljs-type">lv_obj_t</span> *screen_1_label_1;<br>	<span class="hljs-type">lv_obj_t</span> *screen_1_label_2;<br>&#125;lv_ui;<br></code></pre></td></tr></table></figure>
+接下来无论是要修改样式还是制作动画都只需要访问结构体中的对象来设置即可。</p>
+<h3 id="unicodeutf-8与gb2312">3.3.4 UNICODE,UTF-8与GB2312</h3>
+<p>本项目因为需要显示中文字体，必然绕不开的就是字符编码。
+由于fatfs文件系统的中文字符编码是gb2312格式，而lvgl只能显示出utf-8格式的字体所以需要一个将gb2312编码转化为utf-8编码的函数。</p>
+<p>首先通过fatfs读出文件名<code>f_readdir(&amp;dir, &amp;fileinfo);</code>
+将文件信息读取到<code>fileinfo</code>结构体中。
+<code>fn = *fileinfo.lfname ? fileinfo.lfname : fileinfo.fname;</code>
+然后将文件名地址赋值给fn指针（fn是一个char*类型的指针）。
+之后我们通过遍历<code>*fn</code>来进行处理。</p>
+<p>首先，GB2312编码中，每个汉字占两个字节，但是文件名中可能不只有汉字，所以我们可以通过<code>fn[i] &amp; 0x80</code>来判断<code>fn[i]</code>与<code>fn[i+1]</code>是否属于一个汉字，若属于一个汉字则将这两个字节拼接：<code>src = fn[i + 1] | (fn[i] &lt;&lt; 8);</code>;
+src中存储的就是一个gb2312编码的汉字。</p>
+<p>读取出gb2312格式的汉字后只需要通过fatfs中内置的<code>int temp = (int)ff_convert(src, 1);</code>函数来将其转化为Unicode字符，其原理就是简单的查表，<img
+src="https://s3.bmp.ovh/imgs/2025/02/26/c8dae8a175e21889.webp" srcset="/img/loading.gif" lazyload /></p>
+<p>这一步操作相当于招到了这个汉字的序号，而我们还需要将编码为一种特定的格式，就是utf-8格式</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">U</span>+<span class="hljs-number">0000</span>  - U+<span class="hljs-number">007</span>F:   <span class="hljs-number">0</span>xxxxxxx (<span class="hljs-number">1</span>个字节)<br><span class="hljs-attribute">U</span>+<span class="hljs-number">0080</span>  - U+<span class="hljs-number">07</span>FF:   <span class="hljs-number">110</span>xxxxx <span class="hljs-number">10</span>xxxxxx (<span class="hljs-number">2</span>个字节)<br><span class="hljs-attribute">U</span>+<span class="hljs-number">0800</span>  - U+FFFF:   <span class="hljs-number">1110</span>xxxx <span class="hljs-number">10</span>xxxxxx <span class="hljs-number">10</span>xxxxxx (<span class="hljs-number">3</span>个字节)<br><span class="hljs-attribute">U</span>+<span class="hljs-number">10000</span> - U+<span class="hljs-number">10</span>FFFF: <span class="hljs-number">11110</span>xxx <span class="hljs-number">10</span>xxxxxx <span class="hljs-number">10</span>xxxxxx <span class="hljs-number">10</span>xxxxxx (<span class="hljs-number">4</span>个字节)<br></code></pre></td></tr></table></figure>
+<p>例如 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"> <span class="hljs-number">4</span>   E    <span class="hljs-number">2</span>    D<br><span class="hljs-number">0100</span> <span class="hljs-number">1110</span> <span class="hljs-number">0010</span> <span class="hljs-number">1101</span><br> -----------------------------<br> <span class="hljs-number">1110</span>xxxx <span class="hljs-number">10</span>xxxxxx <span class="hljs-number">10</span>xxxxxx  <span class="hljs-comment">// 上表第三行</span><br> ____0100 __111000 __101101  <span class="hljs-comment">// 将 4E2D 的二进制带入上面的格式中</span><br> -----------------------------<br> <span class="hljs-number">11100100</span> <span class="hljs-number">10111000</span> <span class="hljs-number">10101101</span>  <br></code></pre></td></tr></table></figure>
+所以，只需要按照上面的规律实现一个函数就可以转化unicode为utf-8格式。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/********************************************    *  ********************************</span><br><span class="hljs-comment">  * 将一个字符的Unicode(UCS-2和UCS-4)编码转换成      UTF-8编码.</span><br><span class="hljs-comment">  *</span><br><span class="hljs-comment">  * 参数:</span><br><span class="hljs-comment">  *    unic     字符的Unicode编码值</span><br><span class="hljs-comment">  *    pOutput  指向输出的用于存储UTF8编码值的缓 冲   区的指针</span><br><span class="hljs-comment">  *    outsize  pOutput缓冲的大小</span><br><span class="hljs-comment">  *</span><br><span class="hljs-comment">  * 返回值:</span><br><span class="hljs-comment">  *    返回转换后的字符的UTF8编码所占的字节数, 如    果  出错则返回 0 .</span><br><span class="hljs-comment">  *</span><br><span class="hljs-comment">  * 注意:</span><br><span class="hljs-comment">  *     1. UTF8没有字节序问题, 但是Unicode有字节 序   要求;</span><br><span class="hljs-comment">  *        字节序分为大端(Big Endian)和小端      (Little Endian)两种;</span><br><span class="hljs-comment">  *        在Intel处理器中采用小端法表示, 在此采 用   小端法表示. (低地址存低位)</span><br><span class="hljs-comment">  *     2. 请保证 pOutput 缓冲区有最少有 6 字节  的    空间大小!</span><br><span class="hljs-comment">  *******************************************    *   ********************************/</span><br> <span class="hljs-type">int</span> <span class="hljs-title function_">enc_unicode_to_utf8_one</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span>       unic, <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> *pOutput,</span><br><span class="hljs-params"> 							<span class="hljs-type">int</span> outSize)</span><br> &#123;<br> 	<span class="hljs-comment">// assert(pOutput != NULL);</span><br> 	<span class="hljs-comment">// assert(outSize &gt;= 6);</span><br> <br> 	<span class="hljs-keyword">if</span> (unic &lt;= <span class="hljs-number">0x0000007F</span>)<br> 	&#123;<br> 		<span class="hljs-comment">// * U-00000000 - U-0000007F:       0xxxxxxx</span><br> 		*pOutput = (unic &amp; <span class="hljs-number">0x7F</span>);<br> 		<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br> 	&#125;<br> 	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (unic &gt;= <span class="hljs-number">0x00000080</span> &amp;&amp; unic &lt;=      <span class="hljs-number">0x000007FF</span>)<br> 	&#123;<br> 		<span class="hljs-comment">// * U-00000080 - U-000007FF:       110xxxxx 10xxxxxx</span><br> 		*(pOutput + <span class="hljs-number">1</span>) = (unic &amp; <span class="hljs-number">0x3F</span>) |        <span class="hljs-number">0x80</span>;<br> 		*pOutput = ((unic &gt;&gt; <span class="hljs-number">6</span>) &amp; <span class="hljs-number">0x1F</span>) |       <span class="hljs-number">0xC0</span>;<br> 		<span class="hljs-keyword">return</span> <span class="hljs-number">2</span>;<br> 	&#125;<br> 	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (unic &gt;= <span class="hljs-number">0x00000800</span> &amp;&amp; unic &lt;=      <span class="hljs-number">0x0000FFFF</span>)<br> 	&#123;<br> 		<span class="hljs-comment">// * U-00000800 - U-0000FFFF:       1110xxxx 10xxxxxx 10xxxxxx</span><br> 		*(pOutput + <span class="hljs-number">2</span>) = (unic &amp; <span class="hljs-number">0x3F</span>) |        <span class="hljs-number">0x80</span>;<br> 		*(pOutput + <span class="hljs-number">1</span>) = ((unic &gt;&gt; <span class="hljs-number">6</span>) &amp;         <span class="hljs-number">0x3F</span>) | <span class="hljs-number">0x80</span>;<br> 		*pOutput = ((unic &gt;&gt; <span class="hljs-number">12</span>) &amp; <span class="hljs-number">0x0F</span>) |      <span class="hljs-number">0xE0</span>;<br> 		<span class="hljs-keyword">return</span> <span class="hljs-number">3</span>;<br> 	&#125;<br> 	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (unic &gt;= <span class="hljs-number">0x00010000</span> &amp;&amp; unic &lt;=      <span class="hljs-number">0x001FFFFF</span>)<br> 	&#123;<br> 		<span class="hljs-comment">// * U-00010000 - U-001FFFFF:       11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</span><br> 		*(pOutput + <span class="hljs-number">3</span>) = (unic &amp; <span class="hljs-number">0x3F</span>) |        <span class="hljs-number">0x80</span>;<br> 		*(pOutput + <span class="hljs-number">2</span>) = ((unic &gt;&gt; <span class="hljs-number">6</span>) &amp;         <span class="hljs-number">0x3F</span>) | <span class="hljs-number">0x80</span>;<br> 		*(pOutput + <span class="hljs-number">1</span>) = ((unic &gt;&gt; <span class="hljs-number">12</span>) &amp;        <span class="hljs-number">0x3F</span>) | <span class="hljs-number">0x80</span>;<br> 		*pOutput = ((unic &gt;&gt; <span class="hljs-number">18</span>) &amp; <span class="hljs-number">0x07</span>) |      <span class="hljs-number">0xF0</span>;<br> 		<span class="hljs-keyword">return</span> <span class="hljs-number">4</span>;<br> 	&#125;<br> 	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (unic &gt;= <span class="hljs-number">0x00200000</span> &amp;&amp; unic &lt;=      <span class="hljs-number">0x03FFFFFF</span>)<br> 	&#123;<br> 		<span class="hljs-comment">// * U-00200000 - U-03FFFFFF:       111110xx 10xxxxxx 10xxxxxx  10xxxxxx  10xxxxxx</span><br> 		*(pOutput + <span class="hljs-number">4</span>) = (unic &amp; <span class="hljs-number">0x3F</span>) |        <span class="hljs-number">0x80</span>;<br> 		*(pOutput + <span class="hljs-number">3</span>) = ((unic &gt;&gt; <span class="hljs-number">6</span>) &amp;         <span class="hljs-number">0x3F</span>) | <span class="hljs-number">0x80</span>;<br> 		*(pOutput + <span class="hljs-number">2</span>) = ((unic &gt;&gt; <span class="hljs-number">12</span>) &amp;        <span class="hljs-number">0x3F</span>) | <span class="hljs-number">0x80</span>;<br> 		*(pOutput + <span class="hljs-number">1</span>) = ((unic &gt;&gt; <span class="hljs-number">18</span>) &amp;        <span class="hljs-number">0x3F</span>) | <span class="hljs-number">0x80</span>;<br> 		*pOutput = ((unic &gt;&gt; <span class="hljs-number">24</span>) &amp; <span class="hljs-number">0x03</span>) |      <span class="hljs-number">0xF8</span>;<br> 		<span class="hljs-keyword">return</span> <span class="hljs-number">5</span>;<br> 	&#125;<br> 	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (unic &gt;= <span class="hljs-number">0x04000000</span> &amp;&amp; unic &lt;=      <span class="hljs-number">0x7FFFFFFF</span>)<br> 	&#123;<br> 		<span class="hljs-comment">// * U-04000000 - U-7FFFFFFF:       1111110x 10xxxxxx 10xxxxxx  10xxxxxx  10xxxxxx 10xxxxxx</span><br> 		*(pOutput + <span class="hljs-number">5</span>) = (unic &amp; <span class="hljs-number">0x3F</span>) |        <span class="hljs-number">0x80</span>;<br> 		*(pOutput + <span class="hljs-number">4</span>) = ((unic &gt;&gt; <span class="hljs-number">6</span>) &amp;         <span class="hljs-number">0x3F</span>) | <span class="hljs-number">0x80</span>;<br> 		*(pOutput + <span class="hljs-number">3</span>) = ((unic &gt;&gt; <span class="hljs-number">12</span>) &amp;        <span class="hljs-number">0x3F</span>) | <span class="hljs-number">0x80</span>;<br> 		*(pOutput + <span class="hljs-number">2</span>) = ((unic &gt;&gt; <span class="hljs-number">18</span>) &amp;        <span class="hljs-number">0x3F</span>) | <span class="hljs-number">0x80</span>;<br> 		*(pOutput + <span class="hljs-number">1</span>) = ((unic &gt;&gt; <span class="hljs-number">24</span>) &amp;        <span class="hljs-number">0x3F</span>) | <span class="hljs-number">0x80</span>;<br> 		*pOutput = ((unic &gt;&gt; <span class="hljs-number">30</span>) &amp; <span class="hljs-number">0x01</span>) |      <span class="hljs-number">0xFC</span>;<br> 		<span class="hljs-keyword">return</span> <span class="hljs-number">6</span>;<br> 	&#125;<br> <br> 	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br> &#125;<br></code></pre></td></tr></table></figure>
+<p>将处理完的字符存储在数组中，最后使用<code>lv_list_add_btn(ui-&gt;screen_list_1, LV_SYMBOL_AUDIO, utf);</code>就可以在lvgl的列表中加入一个显示中文文件名的按钮。</p>
+<h3 id="常用汉字库">3.3.5 常用汉字库</h3>
+<p>在转化为utf-8后，lvgl已经认识了，但是缺少字体文件，接下来还需要将常见的ttf字体文件转化为一个个字符数组，这里我使用了gui-guider内置的字体生成器
+<img src="https://s3.bmp.ovh/imgs/2025/02/27/ebc01816a4b969d6.webp" srcset="/img/loading.gif" lazyload />
+最终会生成如下的字模数组。</p>
+<p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs c"><br><span class="hljs-comment">/* U+9ED4 &quot;黔&quot; */</span><br><span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x24</span>, <span class="hljs-number">0x9</span>, <span class="hljs-number">0xa0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x2</span>, <span class="hljs-number">0xc5</span>,<br><span class="hljs-number">0xe5</span>, <span class="hljs-number">0xf0</span>, <span class="hljs-number">0xc9</span>, <span class="hljs-number">0x20</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x2e</span>, <span class="hljs-number">0x8e</span>, <span class="hljs-number">0xbe</span>,<br><span class="hljs-number">0xe</span>, <span class="hljs-number">0x1a</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x2</span>, <span class="hljs-number">0xd7</span>, <span class="hljs-number">0xf3</span>, <span class="hljs-number">0xe5</span>, <span class="hljs-number">0x70</span>,<br><span class="hljs-number">0xb9</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x2c</span>, <span class="hljs-number">0x5e</span>, <span class="hljs-number">0x4a</span>, <span class="hljs-number">0x72</span>, <span class="hljs-number">0xb3</span>, <span class="hljs-number">0xfa</span>,<br><span class="hljs-number">0x0</span>, <span class="hljs-number">0x34</span>, <span class="hljs-number">0xe7</span>, <span class="hljs-number">0x80</span>, <span class="hljs-number">0xe</span>, <span class="hljs-number">0x12</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x1</span>,<br><span class="hljs-number">0x2e</span>, <span class="hljs-number">0x10</span>, <span class="hljs-number">0x23</span>, <span class="hljs-number">0x3a</span>, <span class="hljs-number">0x60</span>, <span class="hljs-number">0x3</span>, <span class="hljs-number">0x9a</span>, <span class="hljs-number">0xe7</span>,<br><span class="hljs-number">0x30</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0xd4</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x2a</span>, <span class="hljs-number">0x50</span>, <span class="hljs-number">0x17</span>, <span class="hljs-number">0x40</span>,<br><span class="hljs-number">0x1f</span>, <span class="hljs-number">0x10</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x85</span>, <span class="hljs-number">0x4b</span>, <span class="hljs-number">0x5a</span>, <span class="hljs-number">0x4</span>, <span class="hljs-number">0xf0</span>,<br><span class="hljs-number">0x0</span>, <span class="hljs-number">0x2e</span>, <span class="hljs-number">0x45</span>, <span class="hljs-number">0x40</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x7c</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>,<br><span class="hljs-number">0x10</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>,<br><br><span class="hljs-comment">/* U+9ED8 &quot;默&quot; */</span><br><span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x5</span>, <span class="hljs-number">0x90</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x3</span>, <span class="hljs-number">0xc3</span>,<br><span class="hljs-number">0x94</span>, <span class="hljs-number">0xe0</span>, <span class="hljs-number">0x5d</span>, <span class="hljs-number">0x55</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x3b</span>, <span class="hljs-number">0x5e</span>, <span class="hljs-number">0x6c</span>,<br><span class="hljs-number">0x3</span>, <span class="hljs-number">0xd3</span>, <span class="hljs-number">0xe0</span>, <span class="hljs-number">0x3</span>, <span class="hljs-number">0xb4</span>, <span class="hljs-number">0xe2</span>, <span class="hljs-number">0xd0</span>, <span class="hljs-number">0x3d</span>,<br><span class="hljs-number">0x5</span>, <span class="hljs-number">0x10</span>, <span class="hljs-number">0x3a</span>, <span class="hljs-number">0x3e</span>, <span class="hljs-number">0x38</span>, <span class="hljs-number">0x36</span>, <span class="hljs-number">0xd4</span>, <span class="hljs-number">0x86</span>,<br><span class="hljs-number">0x0</span>, <span class="hljs-number">0x43</span>, <span class="hljs-number">0xe3</span>, <span class="hljs-number">0xa0</span>, <span class="hljs-number">0x3d</span>, <span class="hljs-number">0x40</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>,<br><span class="hljs-number">0xe</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x4</span>, <span class="hljs-number">0xc7</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x2</span>, <span class="hljs-number">0xbc</span>, <span class="hljs-number">0xe8</span>,<br><span class="hljs-number">0x40</span>, <span class="hljs-number">0x69</span>, <span class="hljs-number">0xb0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x19</span>, <span class="hljs-number">0x40</span>, <span class="hljs-number">0x5a</span>, <span class="hljs-number">0x1b</span>,<br><span class="hljs-number">0x48</span>, <span class="hljs-number">0x90</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x93</span>, <span class="hljs-number">0x7a</span>, <span class="hljs-number">0xb7</span>, <span class="hljs-number">0xa0</span>, <span class="hljs-number">0x2f</span>,<br><span class="hljs-number">0x80</span>, <span class="hljs-number">0x37</span>, <span class="hljs-number">0x13</span>, <span class="hljs-number">0x5</span>, <span class="hljs-number">0x70</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x74</span>, <span class="hljs-number">0x0</span>,<br><span class="hljs-number">0x0</span>, <span class="hljs-number">0x1</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>,<br><br><span class="hljs-comment">/* U+9EEF &quot;黯&quot; */</span><br><span class="hljs-number">0x96</span>, <span class="hljs-number">0x85</span>, <span class="hljs-number">0xc4</span>, <span class="hljs-number">0xa</span>, <span class="hljs-number">0x50</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0xb7</span>, <span class="hljs-number">0xd6</span>,<br><span class="hljs-number">0xd3</span>, <span class="hljs-number">0x7</span>, <span class="hljs-number">0xb0</span>, <span class="hljs-number">0x50</span>, <span class="hljs-number">0xbb</span>, <span class="hljs-number">0xf9</span>, <span class="hljs-number">0xc5</span>, <span class="hljs-number">0x55</span>,<br><span class="hljs-number">0x6c</span>, <span class="hljs-number">0xb1</span>, <span class="hljs-number">0xb8</span>, <span class="hljs-number">0xd5</span>, <span class="hljs-number">0xd3</span>, <span class="hljs-number">0x73</span>, <span class="hljs-number">0x4f</span>, <span class="hljs-number">0x20</span>,<br><span class="hljs-number">0x51</span>, <span class="hljs-number">0xd1</span>, <span class="hljs-number">0x70</span>, <span class="hljs-number">0x56</span>, <span class="hljs-number">0x77</span>, <span class="hljs-number">0x30</span>, <span class="hljs-number">0x13</span>, <span class="hljs-number">0xd6</span>,<br><span class="hljs-number">0x72</span>, <span class="hljs-number">0x44</span>, <span class="hljs-number">0x85</span>, <span class="hljs-number">0xa5</span>, <span class="hljs-number">0x34</span>, <span class="hljs-number">0xe7</span>, <span class="hljs-number">0x63</span>, <span class="hljs-number">0x73</span>,<br><span class="hljs-number">0x39</span>, <span class="hljs-number">0x30</span>, <span class="hljs-number">0x8d</span>, <span class="hljs-number">0x84</span>, <span class="hljs-number">0x3</span>, <span class="hljs-number">0xf0</span>, <span class="hljs-number">0xc</span>, <span class="hljs-number">0x60</span>,<br><span class="hljs-number">0x36</span>, <span class="hljs-number">0x34</span>, <span class="hljs-number">0xc3</span>, <span class="hljs-number">0xf4</span>, <span class="hljs-number">0x4d</span>, <span class="hljs-number">0x50</span>, <span class="hljs-number">0xab</span>, <span class="hljs-number">0x65</span>,<br><span class="hljs-number">0x84</span>, <span class="hljs-number">0xf0</span>, <span class="hljs-number">0xc</span>, <span class="hljs-number">0x60</span>, <span class="hljs-number">0x41</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x4</span>, <span class="hljs-number">0xe3</span>,<br><span class="hljs-number">0x3c</span>, <span class="hljs-number">0x50</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>,<br><br><span class="hljs-comment">/* U+9F0E &quot;鼎&quot; */</span><br><span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x95</span>, <span class="hljs-number">0x5c</span>, <span class="hljs-number">0x40</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x90</span>,<br><span class="hljs-number">0xe4</span>, <span class="hljs-number">0x3b</span>, <span class="hljs-number">0x52</span>, <span class="hljs-number">0x91</span>, <span class="hljs-number">0x1</span>, <span class="hljs-number">0xe0</span>, <span class="hljs-number">0xe1</span>, <span class="hljs-number">0xa</span>,<br><span class="hljs-number">0x53</span>, <span class="hljs-number">0xf0</span>, <span class="hljs-number">0x1</span>, <span class="hljs-number">0xe0</span>, <span class="hljs-number">0xe4</span>, <span class="hljs-number">0x3b</span>, <span class="hljs-number">0x53</span>, <span class="hljs-number">0xf0</span>,<br><span class="hljs-number">0x1</span>, <span class="hljs-number">0xe0</span>, <span class="hljs-number">0xd4</span>, <span class="hljs-number">0x3b</span>, <span class="hljs-number">0x43</span>, <span class="hljs-number">0xf0</span>, <span class="hljs-number">0x1</span>, <span class="hljs-number">0xe3</span>,<br><span class="hljs-number">0x83</span>, <span class="hljs-number">0x9</span>, <span class="hljs-number">0x46</span>, <span class="hljs-number">0xf0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x10</span>, <span class="hljs-number">0xc6</span>, <span class="hljs-number">0xf</span>,<br><span class="hljs-number">0x10</span>, <span class="hljs-number">0x20</span>, <span class="hljs-number">0x4</span>, <span class="hljs-number">0x88</span>, <span class="hljs-number">0xd6</span>, <span class="hljs-number">0xf</span>, <span class="hljs-number">0x55</span>, <span class="hljs-number">0xe3</span>,<br><span class="hljs-number">0x0</span>, <span class="hljs-number">0xe4</span>, <span class="hljs-number">0xc6</span>, <span class="hljs-number">0xf</span>, <span class="hljs-number">0x10</span>, <span class="hljs-number">0xf1</span>, <span class="hljs-number">0x7</span>, <span class="hljs-number">0x60</span>,<br><span class="hljs-number">0xc7</span>, <span class="hljs-number">0xf</span>, <span class="hljs-number">0x10</span>, <span class="hljs-number">0xf2</span>, <span class="hljs-number">0x13</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0xc6</span>, <span class="hljs-number">0xd</span>,<br><span class="hljs-number">0x0</span>, <span class="hljs-number">0xc1</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x0</span>,<br><br></code></pre></td></tr></table></figure></p>
+<p><img
+src="https://s3.bmp.ovh/imgs/2025/02/25/4d60849221edca27.jpg" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="多任务">3.4 多任务</h2>
+<p>在这么一个播放器中，单片机在同一时间段需要处理许多任务，例如按下按钮的检测，动画的展示，文件的读取，音频数据的传输...
+此时若单纯的使用定时器会显得杂乱，不好管理，而且实时性较强的音频解码可能会被阻塞导致音乐卡顿，此时就需要多任务管理。</p>
+<h3 id="lvgl内置的任务模块">3.4.1 lvgl内置的任务模块</h3>
+<p>lvgl内置了一个非抢占式的任务模块（也就是一个任务无法打断另一个任务），虽然任务模块为非抢占式，不如RTOS的抢占式，但是由于其占用少，而且在本项目中的最耗时的刷新屏幕与解码音乐也无法被打断，所以最终选择了lvgl内置的任务模块。</p>
+<p>在lvgl中创建一个任务很简单： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">lv_task_t</span> *task      = lv_task_create(my_task, <span class="hljs-number">100</span>, LV_TASK_PRIO_HIGHEST, <span class="hljs-literal">NULL</span>);<br><span class="hljs-comment">//my_task：任务函数</span><br><span class="hljs-comment">//100：每次调用间隔</span><br><span class="hljs-comment">//LV_TASK_PRIO_HIGHEST：优先级为高；</span><br><span class="hljs-comment">//NULL:传参给任务函数的参数指针。</span><br></code></pre></td></tr></table></figure>
+创建完任务后就可以让lvgl自行根据优先级高低调用任务函数。</p>
+<p>在本项目中就通过这种方法结合状态机来解码音乐。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><code class="hljs c">u8 <span class="hljs-title function_">my_task</span><span class="hljs-params">(<span class="hljs-type">lv_task_t</span> *task)</span><br>&#123;<br><br>	<span class="hljs-keyword">if</span> (playFlag == <span class="hljs-number">1</span> &amp;&amp; wavtransferend == <span class="hljs-number">1</span> &amp;&amp; audiodev.status &amp; <span class="hljs-number">1</span>)<br>	&#123;<br>		show_secbar(wavctrl.cursec * <span class="hljs-number">100</span> / wavctrl.totsec);<br>		wavtransferend = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">if</span> (wavwitchbuf)<br>			fillnum = wav_buffill(audiodev.i2sbuf2, WAV_I2S_TX_DMA_BUFSIZE, wavctrl.bps); <span class="hljs-comment">// 填充buf2</span><br>		<span class="hljs-keyword">else</span><br>			fillnum = wav_buffill(audiodev.i2sbuf1, WAV_I2S_TX_DMA_BUFSIZE, wavctrl.bps); <span class="hljs-comment">// 填充buf1</span><br><br>		wav_get_curtime(audiodev.file, &amp;wavctrl); <span class="hljs-comment">// 得到总时间和当前播放的时间</span><br>		<span class="hljs-keyword">if</span> (fillnum != WAV_I2S_TX_DMA_BUFSIZE)<br>		&#123;<br>			<span class="hljs-comment">// 这里是播放一首歌完毕的时候</span><br>			audio_stop();<br>			playFlag = <span class="hljs-number">0</span>;<br>			res = <span class="hljs-number">0xff</span>;<br>			fillnum = <span class="hljs-number">0</span>;<br>			myfree(SRAMEX, audiodev.tbuf);	  <span class="hljs-comment">// 释放内存</span><br>			myfree(SRAMEX, audiodev.i2sbuf1); <span class="hljs-comment">// 释放内存</span><br>			myfree(SRAMEX, audiodev.i2sbuf2); <span class="hljs-comment">// 释放内存</span><br>			myfree(SRAMEX, audiodev.file);	  <span class="hljs-comment">// 释放内存</span><br>			mf_play_next_file(<span class="hljs-string">&quot;0:&quot;</span>);<br>			<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>		&#125;<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>	&#125;<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (playFlag == <span class="hljs-number">1</span> &amp;&amp; wavtransferend == <span class="hljs-number">0</span>)<br>	&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>	&#125;<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (playFlag == <span class="hljs-number">0</span>)<br>	&#123;<br><br>		audiodev.file = (FIL *)mymalloc(SRAMEX, <span class="hljs-keyword">sizeof</span>(FIL));<br>		audiodev.i2sbuf1 = mymalloc(SRAMEX, WAV_I2S_TX_DMA_BUFSIZE);<br>		audiodev.i2sbuf2 = mymalloc(SRAMEX, WAV_I2S_TX_DMA_BUFSIZE);<br>		audiodev.tbuf = mymalloc(SRAMEX, WAV_I2S_TX_DMA_BUFSIZE);<br>		<span class="hljs-keyword">if</span> (audiodev.file &amp;&amp; audiodev.i2sbuf1 &amp;&amp; audiodev.i2sbuf2 &amp;&amp; audiodev.tbuf)<br>		&#123;<br>			res = wav_decode_init(fileName, &amp;wavctrl); <span class="hljs-comment">// 得到文件的信息</span><br>			show_bitrate(wavctrl.samplerate, wavctrl.bps);<br>			<span class="hljs-keyword">if</span> (res == <span class="hljs-number">0</span>) <span class="hljs-comment">// 解析文件成功</span><br>			&#123;<br>				<span class="hljs-keyword">if</span> (wavctrl.bps == <span class="hljs-number">16</span>)<br>				&#123;<br>					WM8978_I2S_Cfg(<span class="hljs-number">2</span>, <span class="hljs-number">0</span>);																		   <span class="hljs-comment">// 飞利浦标准,16位数据长度</span><br>					I2S2_Init(I2S_Standard_Phillips, I2S_Mode_MasterTx, I2S_CPOL_Low, I2S_DataFormat_16bextended); <span class="hljs-comment">// 飞利浦标准,主机发送,时钟低电平有效,16位扩展帧长度</span><br>				&#125;<br>				<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (wavctrl.bps == <span class="hljs-number">24</span>)<br>				&#123;<br>					WM8978_I2S_Cfg(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>);																   <span class="hljs-comment">// 飞利浦标准,24位数据长度</span><br>					I2S2_Init(I2S_Standard_Phillips, I2S_Mode_MasterTx, I2S_CPOL_Low, I2S_DataFormat_24b); <span class="hljs-comment">// 飞利浦标准,主机发送,时钟低电平有效,24位扩展帧长度</span><br>				&#125;<br>				I2S2_SampleRate_Set(wavctrl.samplerate);										  <span class="hljs-comment">// 设置采样率</span><br>				I2S2_TX_DMA_Init(audiodev.i2sbuf1, audiodev.i2sbuf2, WAV_I2S_TX_DMA_BUFSIZE / <span class="hljs-number">2</span>); <span class="hljs-comment">// 配置TX DMA</span><br>				i2s_tx_callback = wav_i2s_dma_tx_callback;										  <span class="hljs-comment">// 回调函数指wav_i2s_dma_callback</span><br>				audio_stop();<br>				res = f_open(audiodev.file, (TCHAR *)fileName, FA_READ); <span class="hljs-comment">// 打开文件</span><br>				<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>,fileName);<br>				<span class="hljs-keyword">if</span> (res == <span class="hljs-number">0</span>)<br>				&#123;<br>					f_lseek(audiodev.file, wavctrl.datastart); <span class="hljs-comment">// 跳过文件头</span><br>					fillnum = wav_buffill(audiodev.i2sbuf1, WAV_I2S_TX_DMA_BUFSIZE, wavctrl.bps);<br>					fillnum = wav_buffill(audiodev.i2sbuf2, WAV_I2S_TX_DMA_BUFSIZE, wavctrl.bps);<br>					audio_start();<br>					<span class="hljs-keyword">if</span> (res == <span class="hljs-number">0</span>)<br>					&#123;<br>						<span class="hljs-keyword">while</span> (wavtransferend == <span class="hljs-number">0</span>)<br>							; <span class="hljs-comment">// 等待wav传输完成;</span><br>						wavtransferend = <span class="hljs-number">0</span>;<br>						<span class="hljs-keyword">if</span> (wavwitchbuf)<br>							fillnum = wav_buffill(audiodev.i2sbuf2, WAV_I2S_TX_DMA_BUFSIZE, wavctrl.bps); <span class="hljs-comment">// 填充buf2</span><br>						<span class="hljs-keyword">else</span><br>							fillnum = wav_buffill(audiodev.i2sbuf1, WAV_I2S_TX_DMA_BUFSIZE, wavctrl.bps); <span class="hljs-comment">// 填充buf1</span><br><br>						playFlag = <span class="hljs-number">1</span>;<br>						wav_get_curtime(audiodev.file, &amp;wavctrl); <span class="hljs-comment">// 得到总时间和当前播放的时间</span><br><br>					&#125;<br>				&#125;<br>				<span class="hljs-keyword">else</span><br>					res = <span class="hljs-number">0XFF</span>;<br>			&#125;<br>			<span class="hljs-keyword">else</span><br>			&#123;<br>				res = <span class="hljs-number">0XFF</span>;<br>				myfree(SRAMEX, audiodev.tbuf);	  <span class="hljs-comment">// 释放内存</span><br>				myfree(SRAMEX, audiodev.i2sbuf1); <span class="hljs-comment">// 释放内存</span><br>				myfree(SRAMEX, audiodev.i2sbuf2); <span class="hljs-comment">// 释放内存</span><br>				myfree(SRAMEX, audiodev.file);	  <span class="hljs-comment">// 释放内存</span><br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">else</span><br>			res = <span class="hljs-number">0XFF</span>;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>值得一提的是：自定义任务的优先级无法高于lvgl内部任务（如刷新动画，按钮检测）。</p>
+<h3 id="事件">3.4.2 事件</h3>
+<p>lvgl具有事件模块，当用户操作屏幕或点击按钮时，通过lvgl可以设置对应事件的回调函数来让单片机做出相应反应。</p>
+<p>在这个项目中常用的就是这个方式：<code>lv_obj_set_event_cb(ui-&gt;screen_btn_4, screen_btn_4event_handler);</code>
+第一个参数是触发事件的对象，第二个是回调函数，这里不区分事件是什么,而是在回调函数的参数event中来判断是什么事件。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">screen_btn_4event_handler</span><span class="hljs-params">(<span class="hljs-type">lv_obj_t</span> *obj, <span class="hljs-type">lv_event_t</span> event)</span><br>&#123;<br>    <span class="hljs-keyword">switch</span> (event)<br>	&#123;<br>	<span class="hljs-keyword">case</span> LV_EVENT_PRESSED:<br>	&#123;<br><br>    &#125;<br>    <span class="hljs-keyword">break</span>;<br>	<span class="hljs-keyword">default</span>:<br>		<span class="hljs-keyword">break</span>;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>以上这段代码就是判断lvgl的btn4对象是否被按下。</p>
+<h2 id="用户交互">3.5 用户交互</h2>
+<h3 id="焦点组与按键">3.5.1 焦点、组与按键</h3>
+<p>前文提到了任务系统就是隔一段事件以一定优先级来执行任务函数，这与按键扫描类似，lvgl中也是通过轮询的方式来看哪个按键被按下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs c"><br><span class="hljs-type">lv_group_t</span> *group;<br><span class="hljs-comment">/*Initialize your keypad or keyboard if youhave*/</span><br>keypad_init();<br><span class="hljs-comment">/*Register a keypad input device*/</span><br>lv_indev_drv_init(&amp;indev_drv);<br>indev_drv.type = LV_INDEV_TYPE_KEYPAD;<br>indev_drv.read_cb = keypad_read;<br>indev_keypad = lv_indev_drv_register(indev_drv);<br><span class="hljs-comment">// 创建一个group</span><br>group = lv_group_create();<br>lv_indev_set_group(indev_keypad, group);<br><span class="hljs-comment">/* Will be called by the library to read the key */</span><br><span class="hljs-type">static</span> <span class="hljs-type">bool</span> <span class="hljs-title function_">keypad_read</span><span class="hljs-params">(<span class="hljs-type">lv_indev_drv_t</span> *indev_drv, <span class="hljs-type">lv_indev_data_t</span> *data)</span><br>&#123;<br>    <span class="hljs-type">static</span> <span class="hljs-type">uint32_t</span> last_key = <span class="hljs-number">0</span>;<br><br>    <span class="hljs-comment">/*Get whether the a key is pressed and save the pressed key*/</span><br>    <span class="hljs-type">uint32_t</span> act_key = KEY_Scan(<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">if</span> (act_key != <span class="hljs-number">0</span>)<br>    &#123;<br>        data-&gt;state = LV_INDEV_STATE_PR;<br><br>        <span class="hljs-comment">/*Translate the keys to LVGL control characters according to your key definitions*/</span><br>        <span class="hljs-keyword">switch</span> (act_key)<br>        &#123;<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>            act_key = LV_KEY_NEXT;<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:<br>            act_key = LV_KEY_PREV;<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:<br>            act_key = LV_KEY_LEFT;<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">4</span>:<br>            act_key = LV_KEY_RIGHT;<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">5</span>:<br>            act_key = LV_KEY_ENTER;<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br><br>        last_key = act_key;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        data-&gt;state = LV_INDEV_STATE_REL;<br>    &#125;<br><br>    data-&gt;key = last_key;<br><br>    <span class="hljs-comment">/*Return `false` because we are not buffering and no more data to read*/</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>lvgl中定义了几种按键的对应操作，例如代码中的<code>LV_KEY_RIGHT</code>就代表了选中下一个对象（焦点移到下一个对象）。</p>
+<p>但在这之前我们还需要告诉lvgl应该在哪几个对象中切换焦点。
+这就需要将这些对象加入到一个group中： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><br>lv_group_add_obj(group, guider_ui.screen_btn_4);<br>lv_group_add_obj(group, guider_ui.screen_btn_5);<br>lv_group_add_obj(group, guider_ui.screen_btn_6);<br>lv_group_add_obj(group, guider_ui.screen_btn_7);<br>lv_group_add_obj(group, guider_ui.screen_btn_8);<br>lv_group_add_obj(group, guider_ui.screen_list_1);<br></code></pre></td></tr></table></figure></p>
+<p>在本项目屏幕上的表现就是下一个按钮发光以及字体变红。 <img
+src="https://s3.bmp.ovh/imgs/2025/02/27/5fd8cf72546e7785.webp" srcset="/img/loading.gif" lazyload /> <img
+src="https://s3.bmp.ovh/imgs/2025/02/27/4555b5b73595709e.webp" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="值与文字的设置">3.5.2 值与文字的设置</h3>
+<p>在这个界面中，需要设置值的就是标题、采样率、进度条和文件列表项目。</p>
+<p>只需要将lvgl对象的值传入lvgl的特定函数就可以设置值了。
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">show_bitrate</span><span class="hljs-params">(u16 bitrate, u16 bps)</span><br>&#123;<br>	lv_label_set_text_fmt(_ui-&gt;screen_label_1, <span class="hljs-string">&quot;%dhz %dbit&quot;</span>, bitrate, bps);<br>	lv_label_set_text_fmt(_ui-&gt;screen_1_label_2, <span class="hljs-string">&quot;%dhz %dbit&quot;</span>, bitrate, bps);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">show_secbar</span><span class="hljs-params">(u8 value)</span><br>&#123;<br>	lv_bar_set_value(_ui-&gt;screen_bar_1, value, LV_ANIM_OFF);<br>	lv_bar_set_value(_ui-&gt;screen_1_bar_1, value, LV_ANIM_OFF);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">show_title</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *text)</span><br>&#123;<br>	lv_label_set_text(_ui-&gt;screen_label_2, text);<br>	lv_label_set_text(_ui-&gt;screen_1_label_1, text);<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<h3 id="界面的切换">3.5.3 界面的切换</h3>
+<p><img
+src="https://s3.bmp.ovh/imgs/2025/02/27/0c3e2036315a9d6a.webp" srcset="/img/loading.gif" lazyload /></p>
+<p>前文提及，音频解码需要较高实时性且尽量不被阻塞，刷屏占用较长时间的mcu这就会导致音乐卡顿，于是我的解决方案是在播放音乐时强制跳转到播放界面，只有暂停才可以跳出这个页面，所以这就涉及到lvgl切换页面。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">screen_btn_4event_handler</span><span class="hljs-params">(<span class="hljs-type">lv_obj_t</span> *obj, <span class="hljs-type">lv_event_t</span> event)</span><br>&#123;<br>	<span class="hljs-keyword">switch</span> (event)<br>	&#123;<br>	<span class="hljs-keyword">case</span> LV_EVENT_PRESSED:<br>	&#123;<br>		<span class="hljs-keyword">if</span> (audiodev.status == <span class="hljs-number">0</span>)<br>		&#123;<br><br>			lv_label_set_text(_ui-&gt;screen_btn_4_label, <span class="hljs-string">&quot;PLAYING&quot;</span>);<br>			lv_scr_load(_ui-&gt;screen_1);<br>			lv_group_focus_freeze(group, ENABLE);<br>			audiodev.status |= <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">0</span>;<br>		&#125;<br>		<span class="hljs-keyword">else</span><br>		&#123;<br>			audiodev.status &amp;= <span class="hljs-number">0</span> &lt;&lt; <span class="hljs-number">0</span>;<br><br>			lv_scr_load(_ui-&gt;screen);<br>			lv_group_focus_freeze(group, DISABLE);<br>			lv_label_set_text(_ui-&gt;screen_btn_4_label, <span class="hljs-string">&quot;暂停中&quot;</span>);<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">break</span>;<br>	<span class="hljs-keyword">default</span>:<br>		<span class="hljs-keyword">break</span>;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>其中：<code>lv_scr_load(_ui-&gt;screen_1);</code>函数就是加载另一个页面，这样就会显示播放页面了。</p>
+<h2 id="音频播放">3.6 音频播放</h2>
+<h3 id="选歌">3.6.1 选歌</h3>
+<p><img
+src="https://s3.bmp.ovh/imgs/2025/02/27/c845c8533207f004.webp" srcset="/img/loading.gif" lazyload />
+当焦点移到文件列表上是通过之前提及的事件回调函数就可以判断出点击，点击之后通过回调函数参数可以获得触发事件的对象。</p>
+<p>触发事件的对象中含有在文件列表初始化时就写入的文件名（gb2312编码）属性</p>
+<p>这样就可以播放音乐了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">screen_list_1_item_event_handler</span><span class="hljs-params">(<span class="hljs-type">lv_obj_t</span> *obj, <span class="hljs-type">lv_event_t</span> event)</span><br>&#123;<br>	<span class="hljs-keyword">switch</span> (event)<br>	&#123;<br>	<span class="hljs-keyword">case</span> LV_EVENT_PRESSED:<br>	&#123;<br>		<span class="hljs-comment">// 处理文件项目点击事件。</span><br>		<span class="hljs-type">lv_obj_t</span> *play_btn = _ui-&gt;screen_btn_4;<br>		<span class="hljs-built_in">strcpy</span>(play_btn-&gt;file_src, obj-&gt;file_src);<br>		<span class="hljs-type">static</span> <span class="hljs-type">char</span> src[<span class="hljs-number">128</span>];<br>		<span class="hljs-type">int</span> i;<br>		<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">128</span>; i++)<br>		&#123;<br>			src[i] = <span class="hljs-number">0</span>;<br>		&#125;<br>		<span class="hljs-built_in">strcat</span>(src, <span class="hljs-string">&quot;0:&quot;</span>);<br>		<span class="hljs-built_in">strcat</span>(src, obj-&gt;file_src);<br>		<span class="hljs-keyword">if</span> (f_typetell(src) == <span class="hljs-number">0X40</span>)<br>		&#123;<br>			set_play_name(src);<span class="hljs-comment">//设置播放音乐名</span><br>			audiodev.status |= <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">0</span>;<br>			lv_label_set_text(_ui-&gt;screen_btn_4_label, <span class="hljs-string">&quot;PLAYING&quot;</span>);<br>			lv_scr_load(_ui-&gt;screen_1);<br>			lv_group_focus_obj(_ui-&gt;screen_btn_4);<br>			lv_group_focus_freeze(group, ENABLE);<br>			show_title(obj-&gt;file_utf);<br><br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">break</span>;<br>	<span class="hljs-keyword">default</span>:<br>		<span class="hljs-keyword">break</span>;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="切歌">3.6.2 切歌</h3>
+<p>切歌的逻辑本质也是遍历，通过记录当前播放的歌曲来遍历找到正在播放的歌曲，此时就可以知道下一首歌曲的文件名，播放即可。</p>
+<p>而播放上一首歌同样也是遍历，每步遍历都保存上一次文件名，知道找到正在播放的音乐，此时播放上一首即可。</p>
+<p>这里以播放下一首为例： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs c">u8 next_song_flag; <span class="hljs-comment">// 判断是否下一首歌</span><br><span class="hljs-comment">// 得到某个文件下一个文件</span><br>u8 <span class="hljs-title function_">mf_play_next_file</span><span class="hljs-params">(u8 *path)</span><br>&#123;<br>	FRESULT res;<br>	<span class="hljs-type">lv_obj_t</span> *play_btn = _ui_fat-&gt;screen_btn_4;<br>	<span class="hljs-type">char</span> src[<span class="hljs-number">128</span>];<br>	<span class="hljs-built_in">memset</span>(src, <span class="hljs-number">0</span>, <span class="hljs-number">128</span>);<br>	<span class="hljs-type">char</span> *fn; <br>	fileinfo.lfname = mymalloc(SRAMEX, fileinfo.lfsize);<br>	res = f_opendir(&amp;dir, (<span class="hljs-type">const</span> TCHAR *)path);<br>	<span class="hljs-keyword">if</span> (res == FR_OK)<br>	&#123;<br>		<span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>		&#123;<br>			<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> utf[<span class="hljs-number">128</span>];<br>			res = f_readdir(&amp;dir, &amp;fileinfo);<br>			<span class="hljs-keyword">if</span> (res != FR_OK || fileinfo.fname[<span class="hljs-number">0</span>] == <span class="hljs-number">0</span>)<br>				<span class="hljs-keyword">break</span>;<br><br>			fn = *fileinfo.lfname ? fileinfo.lfname : fileinfo.fname;<br>			<span class="hljs-keyword">if</span> (next_song_flag)<br>			&#123;<br>				next_song_flag = <span class="hljs-number">0</span>;<br>				<span class="hljs-built_in">strcat</span>(src, <span class="hljs-string">&quot;0:&quot;</span>);<br>				<span class="hljs-built_in">strcat</span>(src, fn);<br>				audiodev.status &amp;= <span class="hljs-number">0</span> &lt;&lt; <span class="hljs-number">0</span>;<br>				<span class="hljs-built_in">strcpy</span>(play_btn-&gt;file_src, fn);<br>				<span class="hljs-keyword">if</span> (f_typetell(src) == <span class="hljs-number">0X40</span>)<br>				&#123;<br>					set_play_name(src);<br><br>					audiodev.status |= <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">0</span>;<br>					lv_scr_load(_ui_fat-&gt;screen_1);<br>					lv_group_focus_obj(_ui_fat-&gt;screen_btn_4);<br>					lv_group_focus_freeze(group, ENABLE);<br>					show_title(src);<br>				&#125;<br>				<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>			&#125;<br>			next_song_flag = <span class="hljs-built_in">strcmp</span>(play_btn-&gt;file_src, fn) == <span class="hljs-number">0</span>;<br>		&#125;<br>	&#125;<br>	myfree(SRAMEX, fileinfo.lfname);<br>	<span class="hljs-keyword">return</span> res;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<h3 id="调节音量">3.6.3 调节音量</h3>
+<p>调节音量其实就是通过i2c给dac发送信息，以wm8978为例： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">WM8978_SPKvol_Set</span><span class="hljs-params">(u8 volx)</span><br>&#123; <br>	volx&amp;=<span class="hljs-number">0X3F</span>;<span class="hljs-comment">//限定范围</span><br>	<span class="hljs-keyword">if</span>(volx==<span class="hljs-number">0</span>)volx|=<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">6</span>;<span class="hljs-comment">//音量为0时,直接mute </span><br> 	WM8978_Write_Reg(<span class="hljs-number">54</span>,volx);			<span class="hljs-comment">//寄存器54,喇叭左声道音量设置</span><br>	WM8978_Write_Reg(<span class="hljs-number">55</span>,volx|(<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">8</span>));	<span class="hljs-comment">//寄存器55,喇叭右声道音量设置,同步更新(SPKVU=1)	</span><br>&#125;<br></code></pre></td></tr></table></figure>
+在调节完之后调用<code>lv_bar_set_value(_ui-&gt;screen_bar_2, vol, LV_ANIM_OFF);</code>就可以设置音量条。</p>
+<h3 id="显示进度音频采样率与码率">3.6.4 显示进度，音频采样率与码率</h3>
+<p>首先，音频采样率、码率与文件大小在wav文件头部信息中都有，所以只需要获取到文件头信息并且解析就行。</p>
+<p>思路：按照wav文件头编写结构体，结构体对象就会自然而然在内存中按照wav头展开，之后若要访问就可以直接访问结构体。</p>
+<p><img
+src="https://s3.bmp.ovh/imgs/2025/02/27/7a856da6d690a28d.webp" srcset="/img/loading.gif" lazyload /></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs c"> <br><span class="hljs-comment">//RIFF块</span><br><span class="hljs-keyword">typedef</span> __packed <span class="hljs-class"><span class="hljs-keyword">struct</span></span><br><span class="hljs-class">&#123;</span><br>    u32 ChunkID;		   	<span class="hljs-comment">//chunk id;这里固定为&quot;RIFF&quot;,即0X46464952</span><br>    u32 ChunkSize ;		   	<span class="hljs-comment">//集合大小;文件总大小-8</span><br>    u32 Format;	   			<span class="hljs-comment">//格式;WAVE,即0X45564157</span><br>&#125;ChunkRIFF ;<br><span class="hljs-comment">//fmt块</span><br><span class="hljs-keyword">typedef</span> __packed <span class="hljs-class"><span class="hljs-keyword">struct</span></span><br><span class="hljs-class">&#123;</span><br>    u32 ChunkID;		   	<span class="hljs-comment">//chunk id;这里固定为&quot;fmt &quot;,即0X20746D66</span><br>    u32 ChunkSize ;		   	<span class="hljs-comment">//子集合大小(不包括ID和Size);这里为:20.</span><br>    u16 AudioFormat;	  	<span class="hljs-comment">//音频格式;0X01,表示线性PCM;0X11表示IMA ADPCM</span><br>	u16 NumOfChannels;		<span class="hljs-comment">//通道数量;1,表示单声道;2,表示双声道;</span><br>	u32 SampleRate;			<span class="hljs-comment">//采样率;0X1F40,表示8Khz</span><br>	u32 ByteRate;			<span class="hljs-comment">//字节速率; </span><br>	u16 BlockAlign;			<span class="hljs-comment">//块对齐(字节); </span><br>	u16 BitsPerSample;		<span class="hljs-comment">//单个采样数据大小;4位ADPCM,设置为4</span><br><span class="hljs-comment">//	u16 ByteExtraData;		//附加的数据字节;2个; 线性PCM,没有这个参数</span><br>&#125;ChunkFMT;	   <br><span class="hljs-comment">//fact块 </span><br><span class="hljs-keyword">typedef</span> __packed <span class="hljs-class"><span class="hljs-keyword">struct</span> </span><br><span class="hljs-class">&#123;</span><br>    u32 ChunkID;		   	<span class="hljs-comment">//chunk id;这里固定为&quot;fact&quot;,即0X74636166;</span><br>    u32 ChunkSize ;		   	<span class="hljs-comment">//子集合大小(不包括ID和Size);这里为:4.</span><br>    u32 NumOfSamples;	  	<span class="hljs-comment">//采样的数量; </span><br>&#125;ChunkFACT;<br><span class="hljs-comment">//LIST块 </span><br><span class="hljs-keyword">typedef</span> __packed <span class="hljs-class"><span class="hljs-keyword">struct</span> </span><br><span class="hljs-class">&#123;</span><br>    u32 ChunkID;		   	<span class="hljs-comment">//chunk id;这里固定为&quot;LIST&quot;,即0X74636166;</span><br>    u32 ChunkSize ;		   	<span class="hljs-comment">//子集合大小(不包括ID和Size);这里为:4. </span><br>&#125;ChunkLIST;<br><br><span class="hljs-comment">//data块 </span><br><span class="hljs-keyword">typedef</span> __packed <span class="hljs-class"><span class="hljs-keyword">struct</span> </span><br><span class="hljs-class">&#123;</span><br>    u32 ChunkID;		   	<span class="hljs-comment">//chunk id;这里固定为&quot;data&quot;,即0X5453494C</span><br>    u32 ChunkSize ;		   	<span class="hljs-comment">//子集合大小(不包括ID和Size) </span><br>&#125;ChunkDATA;<br><br><span class="hljs-comment">//wav头</span><br><span class="hljs-keyword">typedef</span> __packed <span class="hljs-class"><span class="hljs-keyword">struct</span></span><br><span class="hljs-class">&#123;</span> <br>	ChunkRIFF riff;	<span class="hljs-comment">//riff块</span><br>	ChunkFMT fmt;  	<span class="hljs-comment">//fmt块</span><br><span class="hljs-comment">//	ChunkFACT fact;	//fact块 线性PCM,没有这个结构体	 </span><br>	ChunkDATA data;	<span class="hljs-comment">//data块		 </span><br>&#125;__WaveHeader; <br></code></pre></td></tr></table></figure>
+<p>获得采样率和码率只需要调用：<code>lv_label_set_text_fmt(_ui-&gt;screen_label_1, "%dhz %dbit", bitrate, bps);</code>就可以格式化修改标签。</p>
+<p>获得进度的原理就是计算读取了文件大小的多少然后算出比例：
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">wav_get_curtime</span><span class="hljs-params">(FIL *fx, __wavctrl *wavx)</span><br>&#123;<br>	<span class="hljs-type">long</span> <span class="hljs-type">long</span> fpos;<br>	wavx-&gt;totsec = wavx-&gt;datasize / (wavx-&gt;bitrate / <span class="hljs-number">8</span>); <span class="hljs-comment">// 歌曲总长度(单位:秒)</span><br>	fpos = fx-&gt;fptr - wavx-&gt;datastart;					 <span class="hljs-comment">// 得到当前文件播放到的地方</span><br>	wavx-&gt;cursec = fpos * wavx-&gt;totsec / wavx-&gt;datasize; <span class="hljs-comment">// 当前播放到第多少秒了?</span><br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>之后设置进度条就可以了。</p>
+<h1 id="四.缺点及下一步方向">四.缺点及下一步方向</h1>
+<h2 id="显示部分-1">4.1 显示部分</h2>
+<ul>
+<li>刷屏速度缓慢</li>
+<li>中文字显示不够清晰，字库仍有字无法显示</li>
+<li>缺少其他语言支持</li>
+</ul>
+<h2 id="用户交互-1">4.2 用户交互</h2>
+<ul>
+<li>缺少触摸屏支持（硬件已支持）</li>
+<li>歌曲、音量历史记录</li>
+</ul>
+<h2 id="音频部分">4.3 音频部分</h2>
+<ul>
+<li>缺少MP3、flac等音频格式支持</li>
+</ul>
+<h2 id="总结">4.4 总结</h2>
+<p>总的来说stm32f407性能与速度较快但还不够快，尤其在动画的显示与音频解码这种实时性较强的多任务表现较弱，而且若需要对项目进行扩展，其速度可能更加不够。</p>
+<p>下一步将会尝试使用速度更快的单片机(如esp32，stm32h7)，以及使用上RTOS这种实时性强的系统（如freertos）。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/" class="category-chain-item">单片机</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/C%E8%AF%AD%E8%A8%80/" class="category-chain-item">C语言</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%A1%AC%E4%BB%B6/" class="print-no-link">#硬件</a>
+      
+        <a href="/tags/stm32/" class="print-no-link">#stm32</a>
+      
+        <a href="/tags/HIFI/" class="print-no-link">#HIFI</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>高品质音乐播放器（基于STM32F407）</div>
+      <div>http://jiangno.com/2025/02/27/25_2_27_audioplayer/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>江の</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年2月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/31/24_12_31_make_blog_hexo/" title="使用HEXO和GitHubPage搭建Blog">
+                        <span class="hidden-mobile">使用HEXO和GitHubPage搭建Blog</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      NOW<i class="iconfont icon-love"></i>江の
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
